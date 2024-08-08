@@ -1,18 +1,30 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <n-config-provider :theme="isDarkTheme ? darkTheme : lightTheme">
+    <n-button @click="changeTheme">嗨你好，我第一次用 naive-uiiii</n-button>
+  </n-config-provider>
 </template>
+
+<script lang="ts">
+import { darkTheme, lightTheme } from 'naive-ui'
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    let isDarkTheme = ref<boolean>(true);
+
+    function changeTheme(params:type) {
+      isDarkTheme.value = !isDarkTheme.value;
+    } 
+
+    return {
+      darkTheme,
+      lightTheme,
+      isDarkTheme,
+      changeTheme,
+    }
+  }
+});
+</script>
 
 <style scoped>
 .logo {

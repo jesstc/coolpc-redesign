@@ -1,5 +1,12 @@
 import { createApp } from 'vue'
+import naive from 'naive-ui'
+
 import './style.css'
+// vfonts
+import 'vfonts/RobotoSlab.css'
+import 'vfonts/FiraCode.css'
+
 import App from './App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(naive).mount('#app');
