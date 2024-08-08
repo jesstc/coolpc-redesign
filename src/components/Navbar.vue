@@ -1,7 +1,7 @@
 <template>
   <nav class="flex flex-row py-4 items-center justify-between border-2 border-b-stone-200 px-8 md:px-24">
     <img
-      class="cursor-pointer h-10 md:h-16" alt="CoolPC Logo"
+      class="cursor-pointer h-14 md:h-16" alt="CoolPC Logo"
       src="../assets/logo.png"
       @click="navigateToHome"
     />
@@ -19,7 +19,7 @@
     </n-button>
 
     <button v-else @click="toggleMobileMenu">
-      <n-icon :component="MenuOutline" />
+      <n-icon :component="MenuOutline" size="24" />
     </button>
 
     <n-drawer v-model:show="isMobileMenuOpen" placement="right">
