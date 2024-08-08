@@ -1,29 +1,38 @@
 <template>
   <n-config-provider :theme="isDarkTheme ? darkTheme : lightTheme">
-    <n-button @click="changeTheme">嗨你好，我第一次用 naive-uiiii</n-button>
+    <n-layout>
+      <n-layout-header>
+        <Navbar />
+      </n-layout-header>
+
+      <n-layout-content>
+
+        <!-- dark/light theme switch -->
+        <n-switch v-model:value="isDarkTheme">
+          <template #checked>
+            Dark Mode
+          </template>
+          <template #unchecked>
+            Light Mode
+          </template>
+        </n-switch>
+
+        <!-- view -->
+        <router-view />
+
+      </n-layout-content>
+      
+    </n-layout>
   </n-config-provider>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { darkTheme, lightTheme } from 'naive-ui'
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
+import Navbar from './components/Navbar.vue'
 
-export default defineComponent({
-  setup() {
-    let isDarkTheme = ref<boolean>(true);
+let isDarkTheme = ref<boolean>(false);
 
-    function changeTheme(params:type) {
-      isDarkTheme.value = !isDarkTheme.value;
-    } 
-
-    return {
-      darkTheme,
-      lightTheme,
-      isDarkTheme,
-      changeTheme,
-    }
-  }
-});
 </script>
 
 <style scoped>
