@@ -5,10 +5,9 @@
         <Navbar @updateTheme="updateTheme" />
       </n-layout-header>
 
-      <n-layout-content>
-        <!-- view -->
+      <n-layout-content class="mx-8 my-4 md:mx-24 md:my-14">
+        <!-- views -->
         <router-view />
-
       </n-layout-content>
       
     </n-layout>
