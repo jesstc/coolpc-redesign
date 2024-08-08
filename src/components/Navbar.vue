@@ -9,6 +9,7 @@
       v-if="!isMobile"
       mode="horizontal"
       class="ml-auto justify-end"
+      :default-value="selectedValue"
       :options="menuOptions"
       @update:value="handleMenuSelect"
       responsive
@@ -30,6 +31,7 @@
         />
       <n-menu
         :options="menuOptions"
+        :default-value="selectedValue"
         mode="vertical"
         @update:value="handleMenuSelect"
       />
@@ -75,6 +77,7 @@ const navigateToHome = () => {
 
 // n-menu options
 const router = useRouter();
+let selectedValue = ref('product-list');
 function renderIcon(icon: Component) {
     return () => h(NIcon, null, { default: () => h(icon) })
 }
@@ -99,6 +102,7 @@ const handleMenuSelect = (key: string) => {
     router.push(selectedOption.link);
   }
   isMobileMenuOpen.value = false;
+  selectedValue.value = key;
 };
 
 </script>
