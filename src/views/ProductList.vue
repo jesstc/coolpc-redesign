@@ -1,11 +1,11 @@
 <template>
   <n-layout has-sider>
     <n-layout-sider>
-      Handian Bridge
+      <FilterArea />
     </n-layout-sider>
 
-    <n-layout>
-      <n-layout-header>產品列表</n-layout-header>
+    <n-layout class="pl-8">
+      <n-layout-header><h1>產品列表</h1></n-layout-header>
 
       <n-layout-content class="py-8">
         <div class="flex flex-wrap justify-between gap-6">
@@ -27,4 +27,5 @@
   
 <script setup lang="ts">
 import ProductCard from '../components/ProductCard.vue'
+import FilterArea from '../components/FilterArea.vue'
 </script>
