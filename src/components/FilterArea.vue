@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { SelectOption } from 'naive-ui'
-import { reactive, ref, computed, h, Component } from 'vue'
+import { reactive, ref } from 'vue'
 
 // categories options
 const handleUpdateCategories = (value: string, option: SelectOption):void => {
