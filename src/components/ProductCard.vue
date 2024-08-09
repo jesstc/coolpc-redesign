@@ -1,7 +1,8 @@
 <template>
   <n-card title="產品名稱" class="w-3/12">
     <template #cover>
-      <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
+      <img class="w-full h-full object-cover"
+        src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
     </template>
 
     <template #header-extra>
