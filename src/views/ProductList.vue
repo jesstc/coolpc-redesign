@@ -1,9 +1,10 @@
 <template>
     <div>
       <h1>產品列表</h1>
-      <p>這是產品列表</p>
+      <ProductCard />
     </div>
   </template>
   
 <script setup lang="ts">
+import ProductCard from '../components/ProductCard.vue'
 </script>
