@@ -1,7 +1,7 @@
 <template>
   <n-config-provider :theme="isDarkTheme ? darkTheme : lightTheme">
     <n-layout>
-      <n-layout-header>
+      <n-layout-header bordered>
         <Navbar @updateTheme="updateTheme" />
       </n-layout-header>
 
