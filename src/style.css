@@ -3,7 +3,37 @@
 @tailwind utilities;
 
 :root {
-  font-family: v-sans, v-mono;
-  /* line-height: 1.5; */
-  /* font-weight: 400; */
+  --font-primary: v-sans, sans-serif;
+  --font-mono: v-mono, monospace;
+}
+
+body {
+  @apply font-medium text-base leading-relaxed tracking-wide;
+  font-family: var(--font-primary), var(--font-mono);
+}
+
+h1 {
+  @apply font-extrabold text-xl leading-10 tracking-wider;
+  font-family: var(--font-primary);
+}
+
+h3 {
+  @apply font-bold text-lg leading-8 tracking-wider;
+  font-family: var(--font-primary);
+}
+
+h4 {
+  @apply font-bold text-base leading-6 tracking-wider;
+  font-family: var(--font-primary);
+}
+
+p {
+  @apply font-bold text-base leading-7 tracking-wider;
+  font-family: var(--font-primary);
+  /* color: theme('colors.primary.DEFAULT'); */
+}
+
+span {
+  @apply font-medium text-sm leading-4 tracking-wider;
+  font-family: var(--font-primary);
 }

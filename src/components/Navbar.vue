@@ -78,7 +78,7 @@ const navigateToHome = () => {
 // n-menu options
 const router = useRouter();
 let selectedValue = ref('product-list');
-function renderIcon(icon: Component) {
+const renderIcon = (icon: Component) => {
     return () => h(NIcon, null, { default: () => h(icon) })
 }
 const menuOptions = ref([
