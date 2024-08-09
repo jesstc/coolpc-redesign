@@ -1,11 +1,11 @@
 <template>
   <n-config-provider :theme="isDarkTheme ? darkTheme : lightTheme">
     <n-layout>
-      <n-layout-header bordered>
+      <n-layout-header bordered class="fixed z-10">
         <Navbar @updateTheme="updateTheme" />
       </n-layout-header>
 
-      <n-layout-content class="mx-8 my-4 md:mx-24 md:my-14 h-full">
+      <n-layout-content class="mx-8 mt-32 mb-4 md:mx-24 md:mb-14 h-full">
         <!-- views -->
         <router-view />
       </n-layout-content>
