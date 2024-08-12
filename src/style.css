@@ -8,32 +8,32 @@
 }
 
 body {
-  @apply font-medium text-base leading-relaxed tracking-wide;
+  @apply font-normal text-base leading-relaxed tracking-wide h-fit;
   font-family: var(--font-primary), var(--font-mono);
 }
 
 h1 {
-  @apply font-extrabold text-xl leading-10 tracking-wider;
+  @apply font-extrabold text-xl leading-10 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 
 h3 {
-  @apply font-bold text-lg leading-8 tracking-wider;
+  @apply font-bold text-lg leading-8 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 
 h4 {
-  @apply font-bold text-base leading-6 tracking-wider;
+  @apply font-bold text-base leading-6 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 
 p {
-  @apply font-bold text-base leading-7 tracking-wider;
+  @apply text-base leading-7 tracking-wider h-fit;
   font-family: var(--font-primary);
   /* color: theme('colors.primary.DEFAULT'); */
 }
 
 span {
-  @apply font-medium text-sm leading-4 tracking-wider;
+  @apply font-medium text-sm leading-4 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
