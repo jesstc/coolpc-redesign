@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ArrowSort20Regular, ArrowSortDown20Regular, ArrowSortUp20Regular } from '@vicons/fluent'
+import { NFlex, NButtonGroup, NButton, NIcon } from 'naive-ui'
 
 const categorySort = ref<number>(0);
 const priceSort = ref<number>(0);

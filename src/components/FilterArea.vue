@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { SelectOption } from 'naive-ui'
+import { SelectOption, NCard, NSpace, NInputNumber, NSelect } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
 // categories options

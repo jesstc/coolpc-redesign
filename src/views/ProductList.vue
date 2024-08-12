@@ -33,4 +33,5 @@
 import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
+import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader } from 'naive-ui'
 </script>

@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { darkTheme, lightTheme } from 'naive-ui'
+import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NSpace } from 'naive-ui'
 import { ref, Ref } from 'vue'
 import Navbar from './components/Navbar.vue'
 

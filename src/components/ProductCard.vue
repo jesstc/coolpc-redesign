@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { NIcon } from 'naive-ui'
+import { NIcon, NCard, NButton, NInputNumber, NTooltip } from 'naive-ui'
 import { ref, Ref, computed, h, Component } from 'vue'
 import { Box } from '@vicons/carbon'
 import { Add, Remove } from '@vicons/ionicons5'

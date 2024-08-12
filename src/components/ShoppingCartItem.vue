@@ -3,10 +3,10 @@
     <img v-if="props.isPage" class="w-3/12 h-24 object-scale-down bg-slate-300"
       src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
 
-    <n-space vertical class="w-3/12">
+    <n-flex vertical class="w-3/12">
       <h3>產品名稱</h3>
       <p v-if="props.isPage">產品規格：產品規格產品規格產品規格產品規格產品規格產品規格產品規格產品規格產品規格產品規格</p>
-    </n-space>
+    </n-flex>
 
     <p>$單價</p>
 
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { NIcon } from 'naive-ui'
+import { NFlex, NButton, NIcon, NInputNumber } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
 import { defineProps } from 'vue';
 

@@ -15,4 +15,5 @@
   
 <script setup lang="ts">
 import ShoppingCartItem from '../components/ShoppingCartItem.vue'
+import { NFlex } from 'naive-ui'
 </script>
