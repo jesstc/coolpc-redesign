@@ -1,6 +1,6 @@
 <template>
   <n-flex justify="space-between" class="w-full h-24 overflow-hidden items-center">
-    <img v-if="props.isPage" class="w-3/12 h-24 object-scale-down bg-slate-300"
+    <img v-if="props.isPage" class="w-3/12 h-full object-scale-down bg-slate-300 items-center"
       src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
 
     <n-flex vertical class="w-3/12">
