@@ -1,42 +1,77 @@
 <template>
-  <nav class="flex flex-row py-4 items-center justify-between px-8 md:px-24">
+  <nav class="flex flex-row py-4 items-center justify-between gap-16 px-8 md:px-24">
+
     <img
       class="cursor-pointer h-14 md:h-16" alt="CoolPC Logo"
       src="../assets/logo.png"
       @click="navigateToHome"
     />
-    <n-menu
-      v-if="!isMobile"
-      mode="horizontal"
-      class="ml-auto justify-end"
-      :default-value="selectedValue"
-      :options="menuOptions"
-      @update:value="handleMenuSelect"
-      responsive
-    />
+
+    <!-- menu items -->
+    <n-tabs 
+      v-if="!isMobile" 
+      size="large" justify-content="end" animated
+      :value="selectedValue"
+      @update:value="handleMenuSelect">
+
+      <n-tab v-for="option in menuOptions"
+        :key="option.key"
+        :name="option.link"
+        class="mx-8">
+        <n-popover v-if="option.key === 'shopping-cart'" trigger="hover">
+          <template #trigger>
+            <n-flex class="flex-row items-center gap-4">
+              <n-icon :component="option.icon" size="28" />
+              <h4>{{ option.label }}</h4>
+            </n-flex>
+          </template>
+          <div>購物車的內容</div>
+        </n-popover>
+        <n-flex v-else class="flex-row items-center gap-4">
+          <n-icon :component="option.icon" size="28" />
+          <h4>{{ option.label }}</h4>
+        </n-flex> 
+      </n-tab>
+
+    </n-tabs>
+
     <!-- dark/light theme switch -->
     <n-button v-if="!isMobile" @click="changeTheme">
       {{ isDarkTheme ? '淺色模式' : '深色模式' }}
     </n-button>
 
+    <!-- menu btn (for mobile device) -->
     <button v-else @click="toggleMobileMenu">
       <n-icon :component="MenuOutline" size="24" />
     </button>
 
+    <!-- side menu (for mobile device) -->
     <n-drawer v-model:show="isMobileMenuOpen" placement="right">
       <img
         class="cursor-pointer w-11/12 ml-2 my-10" width="100" alt="CoolPC Logo"
         src="../assets/logo.png"
         @click="navigateToHome"
         />
-      <n-menu
-        :options="menuOptions"
-        :default-value="selectedValue"
-        mode="vertical"
-        @update:value="handleMenuSelect"
-      />
+
+      <n-tabs 
+        size="large" justify-content="end" placement="right" animated
+        :value="selectedValue"
+        @update:value="handleMenuSelect">
+
+        <n-tab v-for="option in menuOptions"
+          :key="option.key"
+          :name="option.link"
+          class="mx-8">
+          <n-flex class="flex-row items-center gap-4">
+            <n-icon :component="option.icon" size="28" />
+            <h4>{{ option.label }}</h4>
+          </n-flex>
+        </n-tab>
+
+      </n-tabs>
+      
       <!-- dark/light theme switch -->
-      <n-button class="w-10/12 ml-4 mt-6" @click="changeTheme">
+      <n-button class="w-8/12 ml-8 mt-6" @click="changeTheme">
         {{ isDarkTheme ? '淺色模式' : '深色模式' }}
       </n-button>
     </n-drawer>
@@ -45,9 +80,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { NIcon } from 'naive-ui'
-import { ref, Ref, computed, h, Component } from 'vue'
+import { useRouter, useRoute } from 'vue-router';
+import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover } from 'naive-ui'
+import { ref, Ref, computed } from 'vue'
 import { useWindowSize } from '@vueuse/core';
 import { ReaderOutline, CartOutline, MenuOutline } from '@vicons/ionicons5'
 
@@ -77,30 +112,23 @@ const navigateToHome = () => {
 
 // n-menu options
 const router = useRouter();
-let selectedValue = ref('product-list');
-const renderIcon = (icon: Component) => {
-    return () => h(NIcon, null, { default: () => h(icon) })
-}
+let selectedValue = ref(useRoute().fullPath);
 const menuOptions = ref([
   {
     label: '產品列表',
     key: 'product-list',
     link: '/',
-    icon: renderIcon(ReaderOutline),
+    icon: ReaderOutline,
   },
   {
     label: '購物車',
     key: 'shopping-cart',
     link: '/shopping-cart',
-    icon: renderIcon(CartOutline),
-    
+    icon: CartOutline,
   }
 ]);
 const handleMenuSelect = (key: string) => {
-  const selectedOption = menuOptions.value.find(option => option.key === key);
-  if (selectedOption) {
-    router.push(selectedOption.link);
-  }
+  router.push(key);
   isMobileMenuOpen.value = false;
   selectedValue.value = key;
 };
