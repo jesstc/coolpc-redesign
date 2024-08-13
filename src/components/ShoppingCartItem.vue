@@ -1,35 +1,43 @@
 <template>
   <n-flex justify="space-around"
     class="w-full h-fit py-4 overflow-hidden items-center"
-    :style="{ backgroundColor: themeVars.tableColorHover }">
-    
-    <img v-if="props.isPage" class="w-3/12 h-24 object-scale-down bg-slate-300 items-center"
+    :style="!props.isHoverContent && { backgroundColor: themeVars.tableColorHover }">
+
+    <!-- product img -->
+    <img v-if="!props.isHoverContent"
+      class="w-3/12 h-24 object-scale-down bg-slate-300 items-center"
       src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
 
-    <n-flex vertical :size="8" class="w-3/12">
-      <h3>產品名稱</h3>
-      <span v-if="props.isPage" :style="{ color: themeVars.clearColorHover }">
-        產品規格：產品規格產品規格產品規格產品規格產品規格
+    <!-- product name / description -->
+    <n-flex v-if="!props.isHoverContent" vertical :size="8" class="w-3/12">
+      <h3>{{ props.product.name }}</h3>
+      <span v-if="props.product.description" :style="{ color: themeVars.clearColorHover }">
+        {{ props.product.description }}
       </span>
     </n-flex>
+    <n-flex v-else class="w-2/12">
+      <span>{{ props.product.name }}</span>
+    </n-flex>
 
-    <p>$10000</p>
+    <!-- per price -->
+    <p>${{ props.product.price }}</p>
 
     <!-- number btn group -->
-    <n-input-number class="w-1/12 h-fit text-center" 
+    <n-input-number class="h-fit text-center" :class="props.isHoverContent ? 'w-2/12' : 'w-1/12'"
       button-placement="both"
-      :default-value="2"
+      :default-value="props.number"
       min="1" max="100"
     />
 
-    <p v-if="props.isPage">$20000</p>
+    <!-- total price -->
+    <p v-if="!props.isHoverContent">${{ props.number*props.product.price }}</p>
     
-    <!-- add to cart btn -->
+    <!-- delete btn -->
     <n-button strong secondary type="error" class="h-fit">
       <template #icon>
-        <n-icon><TrashOutline /></n-icon>
+        <n-icon :component="TrashOutline" />
       </template>
-      <span v-if="props.isPage">刪除</span>
+      <span v-if="!props.isHoverContent">刪除</span>
     </n-button>
   </n-flex>
 </template>
@@ -38,15 +46,29 @@
 import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
 import { defineProps } from 'vue';
+import { ProductInfo } from './ProductCard.vue'
+
+export interface CartProducts {
+  readonly id: number,
+  productinfo: ProductInfo,
+  number: number,
+}
+export interface CartItems {
+  readonly category: string,
+  products: Array<CartProducts>,
+};
 
 const themeVars = useThemeVars();
 
 export interface Props {
-  isPage?: boolean;
+  product: ProductInfo,
+  number?: number,
+  isHoverContent?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  isPage: true,
+  isHoverContent: false,
+  number: 1,
 })
 
 </script>

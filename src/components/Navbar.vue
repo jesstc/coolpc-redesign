@@ -18,14 +18,35 @@
         :key="option.key"
         :name="option.link"
         class="mx-8">
-        <n-popover v-if="option.key === 'shopping-cart'" trigger="hover">
+        <n-popover v-if="option.key === 'shopping-cart'" trigger="hover" :width="500">
           <template #trigger>
             <n-flex class="flex-row items-center gap-4">
               <n-icon :component="option.icon" size="28" />
               <h4>{{ option.label }}</h4>
             </n-flex>
           </template>
-          <div>購物車的內容</div>
+
+          <!-- shopping cart hover content -->
+          <n-flex v-if="shoppingCart.length">
+            <n-flex justify="space-around" class="w-full items-center text-center py-2" :style="{ backgroundColor: themeVars.tableColorHover }">
+              <span>產品名稱</span>
+              <span>單價</span>
+              <span>數量</span>
+              <span>操作</span>
+            </n-flex>
+
+            <n-flex vertical v-for="(item, index) in shoppingCart" :key="index">
+              <span>{{ item.category }}</span>
+              <ShoppingCartItem v-for="product in item.products" 
+                :key="product.id"
+                :product="product.productinfo"
+                :number="product.number"
+                isHoverContent />
+            </n-flex>
+              
+          </n-flex>
+          <n-flex v-else>購物車是空的</n-flex>
+
         </n-popover>
         <n-flex v-else class="flex-row items-center gap-4">
           <n-icon :component="option.icon" size="28" />
@@ -81,10 +102,14 @@
 
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
-import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover } from 'naive-ui'
+import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, useThemeVars } from 'naive-ui'
 import { ref, Ref, computed } from 'vue'
 import { useWindowSize } from '@vueuse/core';
 import { ReaderOutline, CartOutline, MenuOutline } from '@vicons/ionicons5'
+import ShoppingCartItem, { CartItems } from './ShoppingCartItem.vue';
+import { Product } from '@vicons/carbon';
+
+const themeVars = useThemeVars();
 
 // handle the switch of nav mode
 const isMobileMenuOpen = ref(false);
@@ -132,5 +157,20 @@ const handleMenuSelect = (key: string) => {
   isMobileMenuOpen.value = false;
   selectedValue.value = key;
 };
+
+// shopping cart items
+const shoppingCart:Array<CartItems> = [
+  { category: '主機板',
+    products: [
+      { id: 1, productinfo: {id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板'}, number: 2 },
+      { id: 2, productinfo: {id: 2, name: 'PRO WS SE', imgUrl: '../assets/logo.png', price: 15000, brand: '華碩', category: '主機板'}, number: 1 },
+    ]
+  },
+  { category: '中央處理器 CPU',
+    products: [
+      { id: 1, productinfo: {id: 1, name: 'B76M Plus Wifi', imgUrl: '../assets/logo.png', price: 15900, brand: '神罰', category: '中央處理器 CPU'}, number: 1 },
+    ]
+  },
+];
 
 </script>
