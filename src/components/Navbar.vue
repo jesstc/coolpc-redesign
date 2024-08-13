@@ -104,14 +104,12 @@
 
 import { useRouter, useRoute } from 'vue-router';
 import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, useThemeVars } from 'naive-ui'
-import { ref, Ref, computed, defineProps } from 'vue'
+import { ref, Ref, computed } from 'vue'
 import { useWindowSize } from '@vueuse/core';
 import { storeToRefs } from "pinia";
 import { useCartStore } from '../stores/cart';
 import { ReaderOutline, CartOutline, MenuOutline } from '@vicons/ionicons5'
 import ShoppingCartItem from './ShoppingCartItem.vue';
-import { CartItems } from '../interfaces/cart';
-import { Product } from '@vicons/carbon';
 
 const themeVars = useThemeVars();
 
@@ -143,22 +141,11 @@ const navigateToHome = () => {
 const router = useRouter();
 let selectedValue = ref(useRoute().fullPath);
 const menuOptions = ref([
-  {
-    label: '產品列表',
-    key: 'product-list',
-    link: '/',
-    icon: ReaderOutline,
-  },
-  {
-    label: '購物車',
-    key: 'shopping-cart',
-    link: '/shopping-cart',
-    icon: CartOutline,
-  }
+  { label: '產品列表', key: 'product-list', link: '/', icon: ReaderOutline },
+  { label: '購物車', key: 'shopping-cart', link: '/shopping-cart', icon: CartOutline }
 ]);
 const handleMenuSelect = (key: string) => {
   router.push(key);
-
   isMobileMenuOpen.value = false;
   selectedValue.value = key;
 };
