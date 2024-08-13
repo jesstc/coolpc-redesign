@@ -35,7 +35,7 @@
               <span>操作</span>
             </n-flex>
 
-            <n-flex vertical v-for="(item, index) in shoppingCart" :key="index">
+            <n-flex vertical v-for="(item, index) in props.shoppingCart" :key="index">
               <span>{{ item.category }}</span>
               <ShoppingCartItem v-for="product in item.products" 
                 :key="product.id"
@@ -101,9 +101,10 @@
 </template>
 
 <script setup lang="ts">
+
 import { useRouter, useRoute } from 'vue-router';
 import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, useThemeVars } from 'naive-ui'
-import { ref, Ref, computed } from 'vue'
+import { ref, Ref, computed, defineProps } from 'vue'
 import { useWindowSize } from '@vueuse/core';
 import { ReaderOutline, CartOutline, MenuOutline } from '@vicons/ionicons5'
 import ShoppingCartItem, { CartItems } from './ShoppingCartItem.vue';
@@ -135,7 +136,7 @@ const navigateToHome = () => {
   isMobileMenuOpen.value = false;
 };
 
-// n-menu options
+// nav options
 const router = useRouter();
 let selectedValue = ref(useRoute().fullPath);
 const menuOptions = ref([
@@ -153,24 +154,17 @@ const menuOptions = ref([
   }
 ]);
 const handleMenuSelect = (key: string) => {
-  router.push(key);
+  router.push({ name: key});
+  if (key === 'shopping-cart') window.history.replaceState({ shoppingCart: props.shoppingCart }, '');
+
   isMobileMenuOpen.value = false;
   selectedValue.value = key;
 };
 
 // shopping cart items
-const shoppingCart:Array<CartItems> = [
-  { category: '主機板',
-    products: [
-      { id: 1, productinfo: {id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板'}, number: 2 },
-      { id: 2, productinfo: {id: 2, name: 'PRO WS SE', imgUrl: '../assets/logo.png', price: 15000, brand: '華碩', category: '主機板'}, number: 1 },
-    ]
-  },
-  { category: '中央處理器 CPU',
-    products: [
-      { id: 1, productinfo: {id: 1, name: 'B76M Plus Wifi', imgUrl: '../assets/logo.png', price: 15900, brand: '神罰', category: '中央處理器 CPU'}, number: 1 },
-    ]
-  },
-];
+interface Props {
+  shoppingCart: Array<CartItems>,
+}
+const props = defineProps<Props>();
 
 </script>
