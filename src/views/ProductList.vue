@@ -29,7 +29,7 @@ import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader } from 'naive-ui'
 import { ProductInfo } from '../interfaces/product'
 
 const products:Array<ProductInfo> = [
-  { id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板' },
+  { id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板', openboxUrl: 'https://www.asus.com/networking-iot-servers/aiot-industrial-solutions/tinker-series/tinker-fanless-aluminum-case/' },
   { id: 2, name: 'PRO WS SE', imgUrl: '../assets/logo.png', price: 15000, brand: '華碩', category: '主機板' },
   { id: 3, name: 'B76M Plus Wifi', imgUrl: '../assets/logo.png', price: 15900, brand: '神罰', category: '中央處理器 CPU' },
 ];

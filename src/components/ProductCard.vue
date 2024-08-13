@@ -6,21 +6,23 @@
     </template>
 
     <template #header-extra>
-      <n-tooltip trigger="hover" placement="bottom">
+      <n-tooltip v-if="props.product.openboxUrl" trigger="hover" placement="bottom">
         <template #trigger>
-          <n-button strong secondary circle>
+          <n-button strong secondary circle
+            tag="a" target="_blank"
+            :href="props.product.openboxUrl">
             <template #icon>
               <n-icon :component="Box" />
             </template>
           </n-button>
         </template>
-        開箱影片
+        開箱討論
       </n-tooltip>
     </template>
     {{ props.product.description || '' }}
     
     <template #footer>
-      <div class="text-right">${{ props.product.price }}</div>
+      <span>${{ props.product.price }}</span>
     </template>
 
     <template #action>
