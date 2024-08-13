@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.11.0",
-    "axios": "^1.7.3",
     "mockjs": "^1.1.0",
+    "pinia": "^2.2.1",
     "vue": "^3.4.31",
     "vue-router": "^4.4.3"
   },

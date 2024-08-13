@@ -6,12 +6,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'ProductList',
-    component: ProductList
+    component: ProductList,
   },
   {
     path: '/shopping-cart',
     name: 'ShoppingCart',
-    component: ShoppingCart
+    component: ShoppingCart,
   },
 ];
 
