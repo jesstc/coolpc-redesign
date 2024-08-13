@@ -1,6 +1,7 @@
 // stores/cart.ts
 import { defineStore } from 'pinia';
 import type { CartItems, CartProducts } from '../interfaces/cart';
+import type { ProductInfo } from '../interfaces/product';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -34,30 +35,24 @@ export const useCartStore = defineStore('cart', {
     },
 
     // Updates or adds a product to the cart
-    updateItem(product_id: number, product_count: number, productInfo: CartProducts) {
-      let found = false;
-      this.cartItems.forEach((item) => {
-        const product = item.products.find(product => product.id === product_id);
-        if (product) {
-          product.number = product_count;
-          found = true;
+    updateItem(product: ProductInfo, product_count: number) {
+      const category = product.category;
+      const categoryItems = this.cartItems.find((item) => item.category === category);
+    
+      if (categoryItems) {
+        const cartProduct = categoryItems.products.find((item) => item.id === product.id);
+        if (cartProduct) cartProduct.number += product_count
+        else {
+          categoryItems.products.push({ id: product.id, productinfo: product, number: product_count });
         }
-      });
-
-      // If the product wasn't found, add it to the appropriate category
-      if (!found) {
-        const category = productInfo.productinfo.category;
-        let categoryItem = this.cartItems.find(item => item.category === category);
-        if (!categoryItem) {
-          categoryItem = { category, products: [] };
-          this.cartItems.push(categoryItem);
-        }
-        categoryItem.products.push({
-          id: product_id,
-          productinfo: productInfo.productinfo,
-          number: product_count,
+      } else {
+        this.cartItems.push({
+          category: category,
+          products: [{ id: product.id, productinfo: product, number: product_count }],
         });
       }
+
+      console.log(this.cartItems)
     }
   }
 });

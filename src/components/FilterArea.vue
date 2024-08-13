@@ -44,7 +44,7 @@ import { reactive, ref } from 'vue'
 
 // categories options
 const handleUpdateCategories = (value: string, option: SelectOption):void => {
-    console.log(value, option);
+  console.log(value, option);
 }
 const categories = [
   { label: '組裝推薦', value: 'recommendations' },

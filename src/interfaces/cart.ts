@@ -7,6 +7,6 @@ export interface CartProducts {
 }
 
 export interface CartItems {
-  readonly category: string;
+  category: string;
   products: Array<CartProducts>;
 }
