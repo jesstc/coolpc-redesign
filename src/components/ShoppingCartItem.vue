@@ -33,7 +33,7 @@
     <p v-if="!props.isHoverContent">${{ props.number*props.product.price }}</p>
     
     <!-- delete btn -->
-    <n-button strong secondary type="error" class="h-fit">
+    <n-button strong secondary type="error" class="h-fit" @click="removeItem(props.product.id)">
       <template #icon>
         <n-icon :component="TrashOutline" />
       </template>
@@ -47,18 +47,29 @@ import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
 import { defineProps } from 'vue';
 import { ProductInfo } from '../interfaces/product'
+import { storeToRefs } from "pinia";
+import { useCartStore } from '../stores/cart';
 
 const themeVars = useThemeVars();
 
 export interface Props {
   product: ProductInfo,
-  number?: number,
+  number: number,
   isHoverContent?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isHoverContent: false,
-  number: 1,
 })
+
+// pinia
+const cartStore = useCartStore();
+const { cartItems } = storeToRefs(cartStore);
+const updateItems = (product:ProductInfo, count:number) => {
+  cartStore.updateItem(product, count);
+}
+const removeItem = (id: number) => {
+  cartStore.removeItem(id);
+}
 
 </script>

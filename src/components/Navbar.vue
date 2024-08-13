@@ -27,7 +27,7 @@
           </template>
 
           <!-- shopping cart hover content -->
-          <n-flex v-if="shoppingCart.length">
+          <n-flex v-if="cartItems.length">
             <n-flex justify="space-around" class="w-full items-center text-center py-2" :style="{ backgroundColor: themeVars.tableColorHover }">
               <span>產品名稱</span>
               <span>單價</span>
@@ -35,7 +35,7 @@
               <span>操作</span>
             </n-flex>
 
-            <n-flex vertical v-for="(item, index) in props.shoppingCart" :key="index">
+            <n-flex vertical v-for="(item, index) in cartItems" :key="index">
               <span>{{ item.category }}</span>
               <ShoppingCartItem v-for="product in item.products" 
                 :key="product.id"
@@ -106,6 +106,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, useThemeVars } from 'naive-ui'
 import { ref, Ref, computed, defineProps } from 'vue'
 import { useWindowSize } from '@vueuse/core';
+import { storeToRefs } from "pinia";
+import { useCartStore } from '../stores/cart';
 import { ReaderOutline, CartOutline, MenuOutline } from '@vicons/ionicons5'
 import ShoppingCartItem from './ShoppingCartItem.vue';
 import { CartItems } from '../interfaces/cart';
@@ -161,10 +163,8 @@ const handleMenuSelect = (key: string) => {
   selectedValue.value = key;
 };
 
-// shopping cart items
-interface Props {
-  shoppingCart: Array<CartItems>,
-}
-const props = defineProps<Props>();
+// pinia
+const cartStore = useCartStore();
+const { cartItems } = storeToRefs(cartStore);
 
 </script>

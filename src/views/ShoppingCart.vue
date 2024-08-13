@@ -14,7 +14,7 @@
         <span class="w-1/12">操作</span>
       </n-flex>
 
-      <n-flex v-for="(item, index) in shoppingCart" :key="index" vertical :size="8">
+      <n-flex v-for="(item, index) in cartItems" :key="index" vertical :size="8">
         <n-flex justify="space-between" class="w-full items-center py-2" :style="{ color: themeVars.closeIconColorHover }">
           <span>{{ item.category }}</span>
         </n-flex>
@@ -36,39 +36,20 @@
   
 <script setup lang="ts">
 import ShoppingCartItem from '../components/ShoppingCartItem.vue'
-import { CartItems } from '../interfaces/cart'
 import { computed } from 'vue'
 import { NFlex, useThemeVars } from 'naive-ui'
+import { storeToRefs } from "pinia";
+import { useCartStore } from '../stores/cart';
 // import products from '../../mock/mockData';
 
+// style
 const themeVars = useThemeVars();
-
 const containerStyle = computed(() => {
   return { height: 'calc(100vh-6rem)' };
 });
 
-// for test 
-const shoppingCart:Array<CartItems> = [
-  { category: '主機板',
-    products: [
-      { id: 1, productinfo: {id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板'}, number: 2 },
-      { id: 2, productinfo: {id: 2, name: 'PRO WS SE', imgUrl: '../assets/logo.png', price: 15000, brand: '華碩', category: '主機板'}, number: 1 },
-    ]
-  },
-  { category: '中央處理器 CPU',
-    products: [
-      { id: 1, productinfo: {id: 1, name: 'B76M Plus Wifi', imgUrl: '../assets/logo.png', price: 15900, brand: '神罰', category: '中央處理器 CPU'}, number: 1 },
-    ]
-  },
-];
+// pinia
+const cartStore = useCartStore();
+const { cartItems, totalPrice } = storeToRefs(cartStore);
 
-const totalPrice = computed(() => {
-  let price = 0;
-  for (const item of shoppingCart) {
-    for (const product of item.products) {
-      price += product.number * product.productinfo.price;
-    }
-  }
-  return price;
-});
 </script>
