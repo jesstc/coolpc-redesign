@@ -46,17 +46,7 @@
 import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
 import { defineProps } from 'vue';
-import { ProductInfo } from './ProductCard.vue'
-
-export interface CartProducts {
-  readonly id: number,
-  productinfo: ProductInfo,
-  number: number,
-}
-export interface CartItems {
-  readonly category: string,
-  products: Array<CartProducts>,
-};
+import { ProductInfo } from '../interfaces/product'
 
 const themeVars = useThemeVars();
 

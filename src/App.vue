@@ -28,7 +28,7 @@
 import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NSpace } from 'naive-ui'
 import { ref, Ref } from 'vue'
 import Navbar from './components/Navbar.vue'
-import { CartItems } from './components/ShoppingCartItem.vue'
+import { CartItems } from './interfaces/cart'
 
 let isDarkTheme:Ref<boolean> = ref<boolean>(false);
 

@@ -35,11 +35,11 @@
 </template>
   
 <script setup lang="ts">
-import ShoppingCartItem, { CartItems } from '../components/ShoppingCartItem.vue'
+import { ShoppingCartItem } from '../components/ShoppingCartItem.vue'
+import { CartItems } from '../interfaces/cart'
 import { computed } from 'vue'
 import { NFlex, useThemeVars } from 'naive-ui'
 // import products from '../../mock/mockData';
-import { ProductInfo } from '../components/ProductCard.vue';
 
 const themeVars = useThemeVars();
 

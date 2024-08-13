@@ -45,18 +45,7 @@
 
 <script setup lang="ts">
 import { NIcon, NCard, NButton, NInputNumber, NTooltip } from 'naive-ui'
-import { ref, Ref, computed, h, Component } from 'vue'
 import { Box } from '@vicons/carbon'
-import { Add, Remove } from '@vicons/ionicons5'
+import { Add } from '@vicons/ionicons5'
 
-export interface ProductInfo {
-  readonly id: number,
-  name: string,
-  imgUrl: string,
-  price: number,
-  brand: string,
-  category: string,
-  description?: string,
-  openboxUrl?: string,
-};
 </script>

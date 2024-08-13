@@ -107,7 +107,8 @@ import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, useThemeVars } f
 import { ref, Ref, computed, defineProps } from 'vue'
 import { useWindowSize } from '@vueuse/core';
 import { ReaderOutline, CartOutline, MenuOutline } from '@vicons/ionicons5'
-import ShoppingCartItem, { CartItems } from './ShoppingCartItem.vue';
+import ShoppingCartItem from './ShoppingCartItem.vue';
+import { CartItems } from '../interfaces/cart';
 import { Product } from '@vicons/carbon';
 
 const themeVars = useThemeVars();
@@ -154,8 +155,7 @@ const menuOptions = ref([
   }
 ]);
 const handleMenuSelect = (key: string) => {
-  router.push({ name: key});
-  if (key === 'shopping-cart') window.history.replaceState({ shoppingCart: props.shoppingCart }, '');
+  router.push(key);
 
   isMobileMenuOpen.value = false;
   selectedValue.value = key;
