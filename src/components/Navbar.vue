@@ -18,7 +18,7 @@
         :key="option.key"
         :name="option.link"
         class="mx-8">
-        <n-popover v-if="option.key === 'shopping-cart'" trigger="hover" :width="500">
+        <n-popover v-if="option.key === 'shopping-cart'" style="max-height: 70vh" trigger="hover" :width="500" scrollable>
           <template #trigger>
             <n-flex class="flex-row items-center gap-4">
               <n-icon :component="option.icon" size="28" />
