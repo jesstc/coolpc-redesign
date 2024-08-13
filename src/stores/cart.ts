@@ -16,7 +16,15 @@ export const useCartStore = defineStore('cart', {
           return itemTotal + (product.productinfo.price * product.number);
         }, 0);
       }, 0);
-    }
+    },
+    // Calculates the amount of specific product in the cart
+    productNumberById: (state) => (productId: number) => {
+      for (const item of state.cartItems) {
+        const product = item.products.find((p) => p.id === productId);
+        if (product) return product.number;
+      }
+      return -1;
+    },
   },
 
   actions: {
@@ -34,15 +42,16 @@ export const useCartStore = defineStore('cart', {
       });
     },
 
-    // Updates or adds a product to the cart
-    updateItem(product: ProductInfo, product_count: number) {
+    // Adds or updates a product to the cart
+    updateItem(product: ProductInfo, product_count: number, is_add?: boolean) {
       const category = product.category;
       const categoryItems = this.cartItems.find((item) => item.category === category);
     
       if (categoryItems) {
         const cartProduct = categoryItems.products.find((item) => item.id === product.id);
-        if (cartProduct) cartProduct.number += product_count
-        else {
+        if (cartProduct) {
+          cartProduct.number = is_add ? cartProduct.number+product_count : product_count;
+        } else {
           categoryItems.products.push({ id: product.id, productinfo: product, number: product_count });
         }
       } else {
@@ -51,6 +60,7 @@ export const useCartStore = defineStore('cart', {
           products: [{ id: product.id, productinfo: product, number: product_count }],
         });
       }
-    }
+    },
+
   }
 });

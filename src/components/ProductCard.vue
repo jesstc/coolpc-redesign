@@ -62,6 +62,6 @@ interface Props {
 const props = defineProps<Props>();
 
 const addToCart = (product:ProductInfo, count:number) => {
-  cartStore.updateItem(product, count);
+  cartStore.updateItem(product, count, true);
 }
 </script>

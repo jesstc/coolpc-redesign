@@ -25,15 +25,15 @@
     <!-- number btn group -->
     <n-input-number class="h-fit text-center" :class="props.isHoverContent ? 'w-2/12' : 'w-1/12'"
       button-placement="both"
-      :default-value="props.number"
       min="1" max="100"
+      v-model:value="currentCount"
     />
 
     <!-- total price -->
     <p v-if="!props.isHoverContent">${{ props.number*props.product.price }}</p>
     
     <!-- delete btn -->
-    <n-button strong secondary type="error" class="h-fit" @click="removeItem(props.product.id)">
+    <n-button strong secondary type="error" class="h-fit py-1" @click="removeItem(props.product.id)">
       <template #icon>
         <n-icon :component="TrashOutline" />
       </template>
@@ -45,9 +45,8 @@
 <script setup lang="ts">
 import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
-import { defineProps } from 'vue';
+import { defineProps, computed, Ref } from 'vue';
 import { ProductInfo } from '../interfaces/product'
-import { storeToRefs } from "pinia";
 import { useCartStore } from '../stores/cart';
 
 const themeVars = useThemeVars();
@@ -64,10 +63,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 // pinia
 const cartStore = useCartStore();
-const { cartItems } = storeToRefs(cartStore);
-const updateItems = (product:ProductInfo, count:number) => {
-  cartStore.updateItem(product, count);
-}
+const currentCount:Ref<number> = computed({
+  get: () => cartStore.productNumberById(props.product.id),
+  set: (newQuantity:number) => {
+    cartStore.updateItem(props.product, newQuantity);
+  },
+});
 const removeItem = (id: number) => {
   cartStore.removeItem(id);
 }
