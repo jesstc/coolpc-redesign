@@ -14,23 +14,16 @@
         <span class="w-1/12">操作</span>
       </n-flex>
 
-      <n-flex vertical :size="8">
+      <n-flex v-for="(item, index) in shoppingCart" :key="index" vertical :size="8">
         <n-flex justify="space-between" class="w-full items-center py-2" :style="{ color: themeVars.closeIconColorHover }">
-          <span>產品類別～～～</span>
+          <span>{{ item.category }}</span>
         </n-flex>
 
-        <ShoppingCartItem />
-        <ShoppingCartItem />
-        <ShoppingCartItem />
-      </n-flex>
-
-      <n-flex vertical :size="8">
-        <n-flex justify="space-between" class="w-full items-center py-2" :style="{ color: themeVars.closeIconColorHover }">
-          <span>產品類別～～～</span>
-        </n-flex>
-
-        <ShoppingCartItem />
-        <ShoppingCartItem />
+        <ShoppingCartItem v-for="product in item.products"
+          :key="product.id"
+          :product="product.productinfo"
+          :number="product.number"
+        />
       </n-flex>
       
     </n-flex>
@@ -42,15 +35,40 @@
 </template>
   
 <script setup lang="ts">
-import ShoppingCartItem from '../components/ShoppingCartItem.vue'
+import ShoppingCartItem, { CartItems } from '../components/ShoppingCartItem.vue'
 import { computed } from 'vue'
 import { NFlex, useThemeVars } from 'naive-ui'
+// import products from '../../mock/mockData';
+import { ProductInfo } from '../components/ProductCard.vue';
 
 const themeVars = useThemeVars();
 
-const totalPrice = 10000;
-
 const containerStyle = computed(() => {
   return { height: 'calc(100vh-6rem)' };
+});
+
+// for test 
+const shoppingCart:Array<CartItems> = [
+  { category: '主機板',
+    products: [
+      { id: 1, productinfo: {id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板'}, number: 2 },
+      { id: 2, productinfo: {id: 2, name: 'PRO WS SE', imgUrl: '../assets/logo.png', price: 15000, brand: '華碩', category: '主機板'}, number: 1 },
+    ]
+  },
+  { category: '中央處理器 CPU',
+    products: [
+      { id: 1, productinfo: {id: 1, name: 'B76M Plus Wifi', imgUrl: '../assets/logo.png', price: 15900, brand: '神罰', category: '中央處理器 CPU'}, number: 1 },
+    ]
+  },
+];
+
+const totalPrice = computed(() => {
+  let price = 0;
+  for (const item of shoppingCart) {
+    for (const product of item.products) {
+      price += product.number * product.productinfo.price;
+    }
+  }
+  return price;
 });
 </script>
