@@ -35,7 +35,7 @@
 </template>
   
 <script setup lang="ts">
-import { ShoppingCartItem } from '../components/ShoppingCartItem.vue'
+import ShoppingCartItem from '../components/ShoppingCartItem.vue'
 import { CartItems } from '../interfaces/cart'
 import { computed } from 'vue'
 import { NFlex, useThemeVars } from 'naive-ui'
