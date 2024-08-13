@@ -1,6 +1,6 @@
 // stores/cart.ts
 import { defineStore } from 'pinia';
-import type { CartItems, CartProducts } from '../interfaces/cart';
+import type { CartItems } from '../interfaces/cart';
 import type { ProductInfo } from '../interfaces/product';
 
 export const useCartStore = defineStore('cart', {
@@ -51,8 +51,6 @@ export const useCartStore = defineStore('cart', {
           products: [{ id: product.id, productinfo: product, number: product_count }],
         });
       }
-
-      console.log(this.cartItems)
     }
   }
 });
