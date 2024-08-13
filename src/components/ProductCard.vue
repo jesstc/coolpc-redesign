@@ -10,7 +10,7 @@
         <template #trigger>
           <n-button strong secondary circle>
             <template #icon>
-              <n-icon><Box /></n-icon>
+              <n-icon :component="Box" />
             </template>
           </n-button>
         </template>
@@ -35,7 +35,7 @@
         <!-- add to cart btn -->
         <n-button strong secondary type="primary" class="w-full lg:w-auto px-2" @click="addToCart(props.product, currentCount)">
           <template #icon>
-            <n-icon><Add /></n-icon>
+            <n-icon :component="Add" />
           </template>
           加入購物車
         </n-button>
@@ -49,7 +49,7 @@ import { ref } from 'vue'
 import { useCartStore } from '../stores/cart';
 import { ProductInfo } from '../interfaces/product'
 import { NIcon, NCard, NButton, NInputNumber, NTooltip } from 'naive-ui'
-import { Box, Product } from '@vicons/carbon';
+import { Box } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
 const cartStore = useCartStore();
