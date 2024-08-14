@@ -1,4 +1,12 @@
 {
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true, // 可選，建議開啟嚴格模式
+    "moduleResolution": "node", // 確保模組解析方式為 Node
+    "resolveJsonModule": true, // 如果需要導入 JSON 文件
+    "typeRoots": ["./node_modules/@types", "./src/types"]
+  },
   "files": [],
   "references": [
     {
