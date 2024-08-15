@@ -14,7 +14,7 @@
       <n-space vertical>
         <h4>價格區間</h4>
         <n-slider v-model:value="value" range
-                  :marks="marks" :step="100" :min="0" :max="100000" />
+                  :marks="marks" :step="100" :min="500" :max="50000" />
         <div class="flex justify-between items-center w-full">
           <n-input-number class="w-5/12 inline text-center" 
                           v-model:value="value[0]" size="small" :show-button="false" :step="100"/>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { SelectOption, NCard, NSpace, NInputNumber, NSelect } from 'naive-ui'
+import { SelectOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
 // categories options
@@ -54,8 +54,8 @@ const categories = [
 ];
 
 // price range
-let min = ref(300);
-let max = ref(80000);
+let min = ref(1000);
+let max = ref(50000);
 let value = ref([min.value, max.value]);
 let marks = reactive({[min.value]: 'min', [max.value]: 'max'});
 
