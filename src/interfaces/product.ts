@@ -5,6 +5,6 @@ export interface ProductInfo {
   price: number;
   brand: string;
   category: string;
-  description?: string;
+  description: string;
   openboxUrl?: string;
 }

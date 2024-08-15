@@ -26,12 +26,20 @@ import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
 import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader } from 'naive-ui'
+import { ref, onMounted } from 'vue'
 import { ProductInfo } from '../interfaces/product'
+import axios from 'axios'
 
-const products:Array<ProductInfo> = [
-  { id: 1, name: 'PRO WS W680-ACE', imgUrl: '../assets/logo.png', price: 10000, brand: '華碩', category: '主機板', openboxUrl: 'https://www.asus.com/networking-iot-servers/aiot-industrial-solutions/tinker-series/tinker-fanless-aluminum-case/' },
-  { id: 2, name: 'PRO WS SE', imgUrl: '../assets/logo.png', price: 15000, brand: '華碩', category: '主機板' },
-  { id: 3, name: 'B76M Plus Wifi', imgUrl: '../assets/logo.png', price: 15900, brand: '神罰', category: '中央處理器 CPU' },
-];
+const products = ref<ProductInfo[]>([]);
 
+const getProductData = () => {
+  axios.get("/api/products").then((res) => {
+    console.log(res);
+    products.value = res.data.items;
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
+onMounted(getProductData);
 </script>

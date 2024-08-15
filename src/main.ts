@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-// import '../mock/index';
 import router from './router';
+import './mock/mockServer';
 
 // vfonts
 import 'vfonts/RobotoSlab.css'
