@@ -1,8 +1,7 @@
 <template>
-  <n-card :title="props.product.name" class="w-72">
+  <n-card :title="'【' + props.product.category + '】' + props.product.name" class="w-72">
     <template #cover>
-      <img class="w-full h-full object-cover"
-        src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
+      <img class="w-full object-cover" :src="props.product.imgUrl">
     </template>
 
     <template #header-extra>
@@ -19,6 +18,9 @@
         開箱討論
       </n-tooltip>
     </template>
+
+    <n-badge :value="props.product.brand" :color="themeVars.iconColorHover" />
+    <br>
     {{ props.product.description || '' }}
     
     <template #footer>
@@ -50,11 +52,13 @@
 import { ref } from 'vue'
 import { useCartStore } from '../stores/cart';
 import { ProductInfo } from '../interfaces/product'
-import { NIcon, NCard, NButton, NInputNumber, NTooltip } from 'naive-ui'
+import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, useThemeVars } from 'naive-ui'
 import { Box } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
 const cartStore = useCartStore();
+
+const themeVars = useThemeVars();
 
 const currentCount = ref(1);
 

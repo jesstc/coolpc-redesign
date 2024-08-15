@@ -7,7 +7,7 @@
       <!-- first row -->
       <n-flex justify="space-between" class="w-full items-center text-center py-2" :style="{ backgroundColor: themeVars.tableColorHover }">
         <span class="w-3/12">圖片</span>
-        <span class="w-3/12">產品名稱/規格</span>
+        <span class="w-3/12">產品名稱</span>
         <span class="w-1/12">單價</span>
         <span class="w-1/12">數量</span>
         <span class="w-1/12">總價</span>

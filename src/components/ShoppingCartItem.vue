@@ -5,8 +5,8 @@
 
     <!-- product img -->
     <img v-if="!props.isHoverContent"
-      class="w-3/12 h-24 object-scale-down bg-slate-300 items-center"
-      src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg">
+      class="w-3/12 h-24 object-scale-down items-center"
+      :src="props.product.imgUrl">
 
     <!-- product name / description -->
     <n-flex v-if="!props.isHoverContent" vertical :size="8" class="w-3/12">
