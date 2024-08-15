@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
-import { defineProps, computed, Ref } from 'vue';
+import { computed, Ref } from 'vue';
 import { ProductInfo } from '../interfaces/product'
 import { useCartStore } from '../stores/cart';
 
