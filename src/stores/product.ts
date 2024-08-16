@@ -5,11 +5,10 @@ import axios from 'axios'
 export const useProductStore = defineStore('product', {
   state: () => ({
     fetching: false,
-    searchQuery: '',
     filters: {
-      category: [],
-      brand: [],
-      priceRange: [0, 1000],
+      category: '' as string | null,
+      brand: '' as string | null,
+      priceRange: [1000, 50000] as [number, number],
     },
     sorter: {
       base: '', 
@@ -29,14 +28,22 @@ export const useProductStore = defineStore('product', {
         this.fetching = true;
         const res = await axios.get('/api/products');
         this.productItems = res.data.items;
-        console.log('產品資料已成功獲取:', this.productItems);
       } catch (err) {
         console.error('獲取資料時發生錯誤:', err);
       } finally {
         this.fetching = false;
       }
-    }
+    },
 
-    
+    // update filter / sorter condition
+    updateFilters(category?:string, brand?:string, price?:[number, number]) {
+      if(category !== undefined) this.filters.category = category;
+      if(brand !== undefined) this.filters.brand = brand;
+      if(price !== undefined) this.filters.priceRange = price;
+    },
+    updateSorter(base: 'category' | 'price' | 'brand', direction: 'asc' | 'desc') {
+      this.sorter.base = base;
+      this.sorter.direction = direction;
+    },
   }
 });

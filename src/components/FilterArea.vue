@@ -7,20 +7,21 @@
           multiple
           placeholder="請選擇產品類別"
           :options="categories"
+          v-model:value="filters.category"
           @update:value="handleUpdateCategories"
         />
       </n-space>
       
       <n-space vertical>
         <h4>價格區間</h4>
-        <n-slider v-model:value="value" range
+        <n-slider v-model:value="priceRange" range
                   :marks="marks" :step="100" :min="500" :max="50000" />
         <div class="flex justify-between items-center w-full">
           <n-input-number class="w-5/12 inline text-center" 
-                          v-model:value="value[0]" size="small" :show-button="false" :step="100"/>
+                          v-model:value="priceRange[0]" size="small" :show-button="false" :step="100"/>
           <span>～</span>
           <n-input-number class="w-5/12 inline text-center" 
-                          v-model:value="value[1]" size="small" :show-button="false" :step="100"/>
+                          v-model:value="priceRange[1]" size="small" :show-button="false" :step="100"/>
         </div>
       </n-space>
 
@@ -30,6 +31,7 @@
           multiple filterable
           placeholder="請選擇品牌"
           :options="brands"
+          v-model:value="filters.brand"
           @update:value="handleUpdateBrands"
         />
       </n-space>
@@ -40,8 +42,13 @@
 
 <script setup lang="ts">
 import { SelectOption, SelectGroupOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
-import { reactive, ref, onMounted, nextTick } from 'vue'
+import { computed, ref, onMounted, nextTick, watch } from 'vue'
 import axios from 'axios'
+import { storeToRefs } from "pinia";
+import { useProductStore } from '../stores/product';
+
+const productStore = useProductStore();
+const { filters } = storeToRefs(productStore);
 
 const error = ref("");
 let categories:SelectOption[] = ([]);
@@ -87,19 +94,20 @@ const getBrandsByCategory = async (category: string) => {
   }
 }
 
-const handleUpdateCategories = (value: string, option: SelectOption):void => {
-  console.log(value, option);
+const handleUpdateCategories = (value:string):void => {
   getBrandsByCategory(value);
+  productStore.updateFilters(value);
 }
 
-const handleUpdateBrands = (value: string, option: SelectOption):void => {
-  console.log(value, option);
+const handleUpdateBrands = (value: string):void => {
+  productStore.updateFilters(undefined, value);
 }
 
 // price range
-let min = ref(1000);
-let max = ref(50000);
-let value = ref([min.value, max.value]);
-let marks = reactive({[min.value]: 'min', [max.value]: 'max'});
+const priceRange = ref(filters.value.priceRange);
+const marks = ref({ [priceRange.value[0]]: 'min', [priceRange.value[1]]: 'max' });
+watch(filters.value.priceRange, (newVal) => {
+  productStore.updateFilters(undefined, undefined, newVal);
+}, { deep: true })
 
 </script>
