@@ -40,18 +40,38 @@
 
 <script setup lang="ts">
 import { SelectOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import axios from 'axios'
 
-// categories options
+interface Category {
+  label: string;
+  value: string;
+}
+
+const error = ref("");
+let categories = reactive<Category[]>([]);
+
+// get categories
+const getCategories = async () => {
+  try {
+    const res = await axios.get('/api/categories');
+    
+    for (const category of res.data.categories) {
+      const cur_cat:Category = {label: category, value: category};
+      categories.push(cur_cat);
+    }
+  } catch (err) {
+    error.value = '無法獲取產品類別資料';
+    console.error('獲取資料時發生錯誤:', err);
+  }
+}
+onMounted(() => {
+  getCategories();
+});
+
 const handleUpdateCategories = (value: string, option: SelectOption):void => {
   console.log(value, option);
 }
-const categories = [
-  { label: '組裝推薦', value: 'recommendations' },
-  { label: 'What goes on', value: 'song8' },
-  { label: 'Girl', value: 'song9' },
-  { label: 'I\'m looking through you', value: 'song10' }
-];
 
 // price range
 let min = ref(1000);
