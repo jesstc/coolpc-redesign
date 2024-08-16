@@ -1,5 +1,5 @@
 <template>
-  <n-spin :show="loading">
+  <n-spin :show="fetching">
     <n-layout has-sider>
 
       <n-layout-sider>
@@ -15,7 +15,7 @@
 
         <n-layout-content class="py-8">
           <div class="flex flex-wrap justify-between gap-6">
-            <ProductCard v-for="(product, index) in products" :key="index" :product="product" />
+            <ProductCard v-for="(product, index) in productItems" :key="index" :product="product" />
           </div>
         </n-layout-content>
       </n-layout>
@@ -29,30 +29,15 @@ import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
 import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NSpin } from 'naive-ui'
-import { ref, onMounted } from 'vue'
-import { ProductInfo } from '../interfaces/product'
-import axios from 'axios'
-
-const products = ref<ProductInfo[]>([]);
-const error = ref("");
-const loading = ref(false);
+import { onMounted } from 'vue'
+import { storeToRefs } from "pinia";
+import { useProductStore } from '../stores/product';
 
 // get all product data
-const getProductData = async () => {
-  try {
-    loading.value = true;
-    const res = await axios.get('/api/products');
-    products.value = res.data.items;
-    console.log('產品資料已成功獲取:', products.value);
-  } catch (err) {
-    error.value = '無法獲取產品資料';
-    console.error('獲取資料時發生錯誤:', err);
-  } finally {
-    loading.value = false;
-  }
-}
+const productStore = useProductStore();
+const { productItems, fetching } = storeToRefs(productStore);
 
 onMounted(() => {
-  getProductData();
+  productStore.fetchProductData();
 });
 </script>
