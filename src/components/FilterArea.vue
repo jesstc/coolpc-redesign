@@ -27,7 +27,7 @@
       <n-space vertical>
         <h4>品牌</h4>
         <n-select
-          multiple
+          multiple filterable
           placeholder="請選擇品牌"
           :options="brands"
           @update:value="handleUpdateBrands"
@@ -39,17 +39,13 @@
 </template>
 
 <script setup lang="ts">
-import { SelectOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
-import { reactive, ref, onMounted } from 'vue'
+import { SelectOption, SelectGroupOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
+import { reactive, ref, onMounted, nextTick } from 'vue'
 import axios from 'axios'
 
-interface Category {
-  label: string;
-  value: string;
-}
-
 const error = ref("");
-let categories = reactive<Category[]>([]);
+let categories:SelectOption[] = ([]);
+let brands = ref<SelectGroupOption[]>([]);
 
 // get categories
 const getCategories = async () => {
@@ -57,7 +53,7 @@ const getCategories = async () => {
     const res = await axios.get('/api/categories');
     
     for (const category of res.data.categories) {
-      const cur_cat:Category = {label: category, value: category};
+      const cur_cat:SelectOption = {label: category, value: category};
       categories.push(cur_cat);
     }
   } catch (err) {
@@ -69,7 +65,34 @@ onMounted(() => {
   getCategories();
 });
 
+// get brands by given category
+const getBrandsByCategory = async (category: string) => {
+  try {
+    const res = await axios.get('/api/brands?'+ category);
+    const newBrands = res.data.brands.map((cat_brand:any) => {
+      const { category, brand } = cat_brand;
+      return {
+        type: 'group',
+        label: category,
+        key: category,
+        children: brand.map((b: string) => ({ label: b, value: b })),
+      };
+    });
+    brands.value = newBrands; 
+    console.log(brands.value)
+    await nextTick(); 
+  } catch (err) {
+    error.value = '無法獲取產品類別資料';
+    console.error('獲取資料時發生錯誤:', err);
+  }
+}
+
 const handleUpdateCategories = (value: string, option: SelectOption):void => {
+  console.log(value, option);
+  getBrandsByCategory(value);
+}
+
+const handleUpdateBrands = (value: string, option: SelectOption):void => {
   console.log(value, option);
 }
 
@@ -78,14 +101,5 @@ let min = ref(1000);
 let max = ref(50000);
 let value = ref([min.value, max.value]);
 let marks = reactive({[min.value]: 'min', [max.value]: 'max'});
-
-// brand options
-const handleUpdateBrands = (value: string, option: SelectOption):void => {
-    console.log(value, option);
-}
-const brands = [
-  { label: '華碩', value: 'asus' },
-  { label: '聯想', value: 'lenevo' },
-];
 
 </script>
