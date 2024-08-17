@@ -6,7 +6,7 @@
         <n-select
           multiple
           placeholder="請選擇產品類別"
-          :options="categories"
+          :options="filterOptios.categories"
           v-model:value="filters.category"
           @update:value="handleUpdateCategories"
         />
@@ -30,7 +30,7 @@
         <n-select
           multiple filterable
           placeholder="請選擇品牌"
-          :options="brands"
+          :options="filterOptios.brands"
           v-model:value="filters.brand"
           @update:value="handleUpdateBrands"
         />
@@ -41,60 +41,20 @@
 </template>
 
 <script setup lang="ts">
-import { SelectOption, SelectGroupOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
-import { ref, onMounted, nextTick, watch } from 'vue'
-import axios from 'axios'
+import { NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
+import { ref, onMounted, watch } from 'vue'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
 
 const productStore = useProductStore();
-const { filters } = storeToRefs(productStore);
+const { filters, filterOptios } = storeToRefs(productStore);
 
-const error = ref("");
-let categories:SelectOption[] = ([]);
-let brands = ref<SelectGroupOption[]>([]);
-
-// get categories
-const getCategories = async () => {
-  try {
-    const res = await axios.get('/api/categories');
-    
-    for (const category of res.data.categories) {
-      const cur_cat:SelectOption = {label: category, value: category};
-      categories.push(cur_cat);
-    }
-  } catch (err) {
-    error.value = '無法獲取產品類別資料';
-    console.error('獲取資料時發生錯誤:', err);
-  }
-}
 onMounted(() => {
-  getCategories();
+  productStore.getCategories();
 });
 
-// get brands by given category
-const getBrandsByCategory = async (category: string) => {
-  try {
-    const res = await axios.get('/api/brands?'+ category);
-    const newBrands = res.data.brands.map((cat_brand:any) => {
-      const { category, brand } = cat_brand;
-      return {
-        type: 'group',
-        label: category,
-        key: category,
-        children: brand.map((b: string) => ({ label: b, value: b })),
-      };
-    });
-    brands.value = newBrands; 
-    await nextTick(); 
-  } catch (err) {
-    error.value = '無法獲取產品類別資料';
-    console.error('獲取資料時發生錯誤:', err);
-  }
-}
-
 const handleUpdateCategories = (value:string):void => {
-  getBrandsByCategory(value);
+  productStore.getBrandsByCategory(value);
   productStore.updateFilters(value);
 }
 

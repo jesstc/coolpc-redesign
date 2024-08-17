@@ -1,10 +1,15 @@
 import { defineStore } from 'pinia';
 import type { ProductInfo } from '../interfaces/product';
+import { SelectOption, SelectGroupOption } from 'naive-ui'
 import axios from 'axios'
 
 export const useProductStore = defineStore('product', {
   state: () => ({
     fetching: false,
+    filterOptios: {
+      categories: [] as Array<SelectOption>,
+      brands: [] as Array<SelectGroupOption>,
+    },
     filters: {
       category: '' as string | null,
       brand: '' as string | null,
@@ -43,6 +48,38 @@ export const useProductStore = defineStore('product', {
         console.error('獲取資料時發生錯誤:', err);
       } finally {
         this.fetching = false;
+      }
+    },
+    // get categories
+    async getCategories() {
+      try {
+        const res = await axios.get('/api/categories');
+        
+        for (const category of res.data.categories) {
+          const cur_cat:SelectOption = {label: category, value: category};
+          this.filterOptios.categories.push(cur_cat);
+        }
+      } catch (err) {
+        console.error('獲取資料時發生錯誤:', err);
+      }
+    },
+    // get brands based on the selected categories
+    async getBrandsByCategory(category: string) {
+      try {
+        const res = await axios.get('/api/brands?'+ category);
+        const newBrands = res.data.brands.map((cat_brand:any) => {
+          const { category, brand } = cat_brand;
+          return {
+            type: 'group',
+            label: category,
+            key: category,
+            children: brand.map((b: string) => ({ label: b, value: b })),
+          };
+        });
+        this.filterOptios.brands = newBrands; 
+        // await nextTick(); 
+      } catch (err) {
+        console.error('獲取資料時發生錯誤:', err);
       }
     },
 
