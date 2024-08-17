@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { SelectOption, SelectGroupOption, NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
-import { computed, ref, onMounted, nextTick, watch } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
@@ -106,7 +106,7 @@ const handleUpdateBrands = (value: string):void => {
 // price range
 const priceRange = ref(filters.value.priceRange);
 const marks = ref({ [priceRange.value[0]]: 'min', [priceRange.value[1]]: 'max' });
-watch(filters.value.priceRange, (newVal) => {
+watch(priceRange, (newVal) => {
   productStore.updateFilters(undefined, undefined, newVal);
 }, { deep: true })
 
