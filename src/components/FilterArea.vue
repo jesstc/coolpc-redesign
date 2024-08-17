@@ -1,18 +1,26 @@
 <template>
-  <n-card title="篩選條件" embedded :bordered="false" class="w-full">
-    <n-space vertical wrap-item :item-style="{ marginTop: '1.5rem' }">
-      <n-space vertical>
+  <n-card embedded :bordered="false" class="flex w-full gap-5">
+    <template #header>
+      <n-flex class="flex items-center">
+        <n-icon :component="FunnelOutline" :color="themeVars.primaryColorPressed" /> 
+        <h3 :style="{ color: themeVars.primaryColorPressed }">篩選條件</h3>
+      </n-flex>
+    </template>
+
+    <n-flex vertical wrap-item :size="32">
+
+      <n-flex vertical>
         <h4>產品類別</h4>
         <n-select
           multiple
           placeholder="請選擇產品類別"
-          :options="filterOptios.categories"
+          :options="filterOptions.categories"
           v-model:value="filters.category"
           @update:value="handleUpdateCategories"
         />
-      </n-space>
+      </n-flex>
       
-      <n-space vertical>
+      <n-flex vertical :size="18">
         <h4>價格區間</h4>
         <n-slider v-model:value="priceRange" range
                   :marks="marks" :step="100" :min="500" :max="50000" />
@@ -23,31 +31,34 @@
           <n-input-number class="w-5/12 inline text-center" 
                           v-model:value="priceRange[1]" size="small" :show-button="false" :step="100" :min="priceRange[0]" :max="50000"/>
         </div>
-      </n-space>
+      </n-flex>
 
-      <n-space vertical>
+      <n-flex vertical>
         <h4>品牌</h4>
         <n-select
           multiple filterable
-          placeholder="請選擇品牌"
-          :options="filterOptios.brands"
+          :placeholder="filterOptions.brands.length ? '請選擇品牌' : '請先選擇產品類別'"
+          :options="filterOptions.brands"
           v-model:value="filters.brand"
           @update:value="handleUpdateBrands"
         />
-      </n-space>
+      </n-flex>
 
-    </n-space>
+    </n-flex>
   </n-card>
 </template>
 
 <script setup lang="ts">
-import { NCard, NSpace, NInputNumber, NSelect, NSlider } from 'naive-ui'
+import { NCard, NFlex, NInputNumber, NSelect, NSlider, NIcon, useThemeVars } from 'naive-ui'
 import { ref, onMounted, watch } from 'vue'
+import { FunnelOutline } from '@vicons/ionicons5';
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
 
+const themeVars = useThemeVars();
+
 const productStore = useProductStore();
-const { filters, filterOptios } = storeToRefs(productStore);
+const { filters, filterOptions } = storeToRefs(productStore);
 
 onMounted(() => {
   productStore.getCategories();

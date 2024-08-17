@@ -14,7 +14,7 @@
         </n-layout-header>
 
         <n-layout-content class="py-8">
-          <div class="flex flex-wrap justify-between gap-6">
+          <div class="flex flex-wrap justify-stretch gap-6">
             <ProductCard v-for="(product, index) in filteredItems" :key="index" :product="product" />
           </div>
         </n-layout-content>
