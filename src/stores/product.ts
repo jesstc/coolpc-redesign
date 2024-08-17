@@ -6,7 +6,7 @@ import axios from 'axios'
 export const useProductStore = defineStore('product', {
   state: () => ({
     fetching: false,
-    filterOptios: {
+    filterOptions: {
       categories: [] as Array<SelectOption>,
       brands: [] as Array<SelectGroupOption>,
     },
@@ -67,7 +67,7 @@ export const useProductStore = defineStore('product', {
         const res = await axios.get('/api/categories');
         for (const category of res.data.categories) {
           const cur_cat:SelectOption = {label: category, value: category};
-          this.filterOptios.categories.push(cur_cat);
+          this.filterOptions.categories.push(cur_cat);
         }
       } catch (err) {
         console.error('獲取資料時發生錯誤:', err);
@@ -86,7 +86,7 @@ export const useProductStore = defineStore('product', {
             children: brand.map((b: string) => ({ label: b, value: b })),
           };
         });
-        this.filterOptios.brands = newBrands; 
+        this.filterOptions.brands = newBrands; 
         // await nextTick(); 
       } catch (err) {
         console.error('獲取資料時發生錯誤:', err);
