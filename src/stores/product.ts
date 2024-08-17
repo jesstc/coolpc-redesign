@@ -23,10 +23,10 @@ export const useProductStore = defineStore('product', {
       return state.productItems.filter((item) => {
         const [minPrice, maxPrice] = state.filters.priceRange;
 
-        const categoryMatch = state.filters.category ? state.filters.category.includes(item.category) : true;
-        const brandMatch = state.filters.brand ? state.filters.brand.includes(item.brand) : true;
+        const categoryMatch = state.filters.category?.length ? state.filters.category.includes(item.category) : true;
+        const brandMatch = state.filters.brand?.length ? state.filters.brand.includes(item.brand) : true;
         const priceMatch = item.price >= minPrice && item.price <= maxPrice;
-
+        
         return categoryMatch && brandMatch && priceMatch;
       })
     },
@@ -51,6 +51,7 @@ export const useProductStore = defineStore('product', {
       if(category !== undefined) this.filters.category = category;
       if(brand !== undefined) this.filters.brand = brand;
       if(price !== undefined) this.filters.priceRange = price;
+      console.log(this.filters)
     },
     updateSorter(base: 'category' | 'price' | 'brand', direction: 'asc' | 'desc') {
       this.sorter.base = base;
