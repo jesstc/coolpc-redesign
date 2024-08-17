@@ -86,7 +86,6 @@ const getBrandsByCategory = async (category: string) => {
       };
     });
     brands.value = newBrands; 
-    console.log(brands.value)
     await nextTick(); 
   } catch (err) {
     error.value = '無法獲取產品類別資料';
