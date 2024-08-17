@@ -17,7 +17,7 @@ export const useCartStore = defineStore('cart', {
       }, 0);
     },
     // Calculates the amount of specific product in the cart
-    productNumberById: (state) => (productId: number) => {
+    productCounterById: (state) => (productId: number) => {
       for (const item of state.cartItems) {
         const product = item.products.find((p) => p.id === productId);
         if (product) return product.number;

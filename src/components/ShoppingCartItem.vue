@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<Props>(), {
 // pinia
 const cartStore = useCartStore();
 const currentCount:Ref<number> = computed({
-  get: () => cartStore.productNumberById(props.product.id),
+  get: () => cartStore.productCounterById(props.product.id),
   set: (newQuantity:number) => {
     cartStore.updateItem(props.product, newQuantity);
   },
