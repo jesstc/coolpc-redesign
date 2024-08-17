@@ -15,6 +15,7 @@ export const useProductStore = defineStore('product', {
       direction: 'asc',
     },
     productItems: [] as Array<ProductInfo>,
+    filteredItems: [] as Array<ProductInfo>,
   }),
 
   getters: {
@@ -40,10 +41,24 @@ export const useProductStore = defineStore('product', {
       if(category !== undefined) this.filters.category = category;
       if(brand !== undefined) this.filters.brand = brand;
       if(price !== undefined) this.filters.priceRange = price;
+      this.productListFilter();
     },
     updateSorter(base: 'category' | 'price' | 'brand', direction: 'asc' | 'desc') {
       this.sorter.base = base;
       this.sorter.direction = direction;
+    },
+
+    // list all product data based on the conditions of filter
+    productListFilter() {
+      this.filteredItems = this.productItems.filter((item) => {
+        const [minPrice, maxPrice] = this.filters.priceRange;
+
+        const categoryMatch = this.filters.category ? this.filters.category.includes(item.category) : true;
+        const brandMatch = this.filters.brand ? this.filters.brand.includes(item.brand) : true;
+        const priceMatch = item.price >= minPrice && item.price <= maxPrice;
+
+        return categoryMatch && brandMatch && priceMatch;
+      })
     },
   }
 });
