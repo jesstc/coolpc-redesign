@@ -5,24 +5,24 @@
       <n-button icon-placement="right"  @click="categorySorting">
         產品類別
         <template #icon>
-          <n-icon v-if="categorySort%3 == 1" :component="ArrowSortDown20Regular" />
-          <n-icon v-else-if="categorySort%3 == 2" :component="ArrowSortUp20Regular" />
+          <n-icon v-if="categorySort%2 == 1" :component="ArrowSortUp20Regular" />
+          <n-icon v-else-if="categorySort%2 == 0" :component="ArrowSortDown20Regular" />
           <n-icon v-else :component="ArrowSort20Regular" />
         </template>
       </n-button>
       <n-button icon-placement="right" @click="priceSorting">
         價格
         <template #icon>
-          <n-icon v-if="priceSort%3 == 1" :component="ArrowSortDown20Regular" />
-          <n-icon v-else-if="priceSort%3 == 2" :component="ArrowSortUp20Regular" />
+          <n-icon v-if="priceSort%2 == 1" :component="ArrowSortUp20Regular" />
+          <n-icon v-else-if="priceSort%2 == 0" :component="ArrowSortDown20Regular" />
           <n-icon v-else :component="ArrowSort20Regular" />
         </template>
       </n-button>
       <n-button icon-placement="right" @click="brandSorting">
         品牌
         <template #icon>
-          <n-icon v-if="brandSort%3 == 1" :component="ArrowSortDown20Regular" />
-          <n-icon v-else-if="brandSort%3 == 2" :component="ArrowSortUp20Regular" />
+          <n-icon v-if="brandSort%2 == 1" :component="ArrowSortUp20Regular" />
+          <n-icon v-else-if="brandSort%2 == 0" :component="ArrowSortDown20Regular" />
           <n-icon v-else :component="ArrowSort20Regular" />
         </template>
       </n-button>
@@ -34,28 +34,42 @@
 import { ref } from 'vue'
 import { ArrowSort20Regular, ArrowSortDown20Regular, ArrowSortUp20Regular } from '@vicons/fluent'
 import { NFlex, NButtonGroup, NButton, NIcon } from 'naive-ui'
+import { useProductStore } from '../stores/product';
 
-const categorySort = ref<number>(0);
-const priceSort = ref<number>(0);
-const brandSort = ref<number>(0);
+const productStore = useProductStore();
 
-const resetSortingStatus = (currentSort:string):void => {
-    if (currentSort != 'category') categorySort.value = 0;
-    else categorySort.value = (categorySort.value+1) % 3;
+const categorySort = ref<number>(-1);
+const priceSort = ref<number>(-1);
+const brandSort = ref<number>(-1);
 
-    if (currentSort != 'price') priceSort.value = 0;
-    else priceSort.value = (priceSort.value+1) % 3;
+const resetSortingStatus = (currentSort: "price" | "brand" | "category"):void => {
+  let isAsc:boolean = false;
 
-    if (currentSort != 'brand') brandSort.value = 0;
-    else brandSort.value = (brandSort.value+1) % 3;
+  if (currentSort != 'category') categorySort.value = -1;
+  else {
+    categorySort.value = (categorySort.value+1) % 2;
+    categorySort.value == 0 && (isAsc = true);
+  }
+  if (currentSort != 'price') priceSort.value = -1;
+  else {
+    priceSort.value = (priceSort.value+1) % 2;
+    priceSort.value == 0 && (isAsc = true);
+  }
+  if (currentSort != 'brand') brandSort.value = -1;
+  else {
+    brandSort.value = (brandSort.value+1) % 2;
+    brandSort.value == 0 && (isAsc = true);
+  }
+
+  productStore.updateSorter(currentSort, isAsc);
 }
 
 const categorySorting = ():void => {
-    resetSortingStatus('category');
+  resetSortingStatus('category');
 }
 
 const priceSorting = ():void => {
-    resetSortingStatus('price');
+  resetSortingStatus('price');
 }
 
 const brandSorting = ():void => {

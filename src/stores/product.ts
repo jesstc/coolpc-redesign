@@ -16,8 +16,8 @@ export const useProductStore = defineStore('product', {
       priceRange: [1000, 50000] as [number, number],
     },
     sorter: {
-      base: '', 
-      direction: 'asc',
+      base: 'category', 
+      isAsc: true,
     },
     productItems: [] as Array<ProductInfo>,
   }),
@@ -33,7 +33,18 @@ export const useProductStore = defineStore('product', {
         const priceMatch = item.price >= minPrice && item.price <= maxPrice;
         
         return categoryMatch && brandMatch && priceMatch;
-      })
+      }).sort((a, b) => {
+        if (state.sorter.base == 'category') {
+          if (state.sorter.isAsc) return a.category.localeCompare(b.category);
+          return b.category.localeCompare(a.category);
+        } else if (state.sorter.base == 'brand') {
+          if (state.sorter.isAsc) return a.brand.localeCompare(b.brand);
+          return b.brand.localeCompare(a.brand);
+        } else {  // price
+          if (state.sorter.isAsc) return a.price - b.price;
+          return b.price - a.price;
+        }
+      });
     },
   },
 
@@ -54,7 +65,6 @@ export const useProductStore = defineStore('product', {
     async getCategories() {
       try {
         const res = await axios.get('/api/categories');
-        
         for (const category of res.data.categories) {
           const cur_cat:SelectOption = {label: category, value: category};
           this.filterOptios.categories.push(cur_cat);
@@ -90,9 +100,9 @@ export const useProductStore = defineStore('product', {
       if(price !== undefined) this.filters.priceRange = price;
       console.log(this.filters)
     },
-    updateSorter(base: 'category' | 'price' | 'brand', direction: 'asc' | 'desc') {
+    updateSorter(base: 'category' | 'price' | 'brand', isAsc: boolean) {
       this.sorter.base = base;
-      this.sorter.direction = direction;
+      this.sorter.isAsc = isAsc;
     },
   }
 });
