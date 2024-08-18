@@ -32,9 +32,11 @@
         </n-layout-header>
 
         <n-layout-content class="py-8">
-          <div class="flex flex-wrap gap-7">
-            <ProductCard v-for="(product, key) in filteredItems" :key="key" :product="product" />
-          </div>
+          <n-grid cols="1 s:1 m:2 l:3 xl:4" responsive="screen">
+            <n-grid-item v-for="(product, key) in filteredItems" :key="key">
+              <ProductCard :product="product" />
+            </n-grid-item>
+          </n-grid>
         </n-layout-content>
       </n-layout>
 
@@ -46,7 +48,7 @@
 import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
-import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NSpin, NTabs, NTab, NFlex, useThemeVars } from 'naive-ui'
+import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NGrid, NGridItem, NSpin, NTabs, NTab, NFlex, useThemeVars } from 'naive-ui'
 import { onMounted } from 'vue'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
