@@ -1,7 +1,12 @@
 <template>
-  <n-card :title="'【' + props.product.category + '】' + props.product.name" class="w-72">
+  <n-card class="w-72">
+
     <template #cover>
-      <img class="w-full object-cover" :src="props.product.imgUrl">
+      <img class="w-full object-cover" :src="props.product.imgUrl" @click="showModal = true">
+    </template>
+
+    <template #header>
+      <h3 @click="showModal = true">【{{ props.product.category }}】 {{ props.product.name }}</h3>
     </template>
 
     <template #header-extra>
@@ -19,12 +24,14 @@
       </n-tooltip>
     </template>
 
-    <n-badge :value="props.product.brand" :color="themeVars.iconColorHover" />
-    <br>
-    {{ props.product.description || '' }}
+    <template #default>
+      <n-badge :value="props.product.brand" :color="themeVars.iconColorHover" />
+      <br>
+      <p @click="showModal = true">{{ props.product.description || '' }}</p>
+    </template>
     
     <template #footer>
-      <span>${{ props.product.price }}</span>
+      <span @click="showModal = true">${{ props.product.price }}</span>
     </template>
 
     <template #action>
@@ -45,14 +52,52 @@
         </n-button>
       </div>
     </template>
+
   </n-card>
+
+  <!-- modal -->
+  <n-modal 
+    v-model:show="showModal" preset="card" 
+    style="width: 70vw;">
+    
+    <n-flex justify="space-around" class="flex-row">
+      <img class="object-cover w-4/12" :src="props.product.imgUrl">
+
+      <n-flex vertical class="w-7/12">
+        <h3 :style="{color:themeVars.primaryColor}">【{{ props.product.category }}】 {{ props.product.name }}</h3>
+        <n-flex vertical>
+          <n-badge :value="props.product.brand" :color="themeVars.iconColorHover" />
+          <p>{{ props.product.description }}</p>
+        </n-flex>
+        <p class="font-bold" :style="{color:themeVars.primaryColor}">${{ props.product.price }}</p>
+
+        <n-flex justify="end">
+          <!-- number btn group -->
+          <n-input-number class="w-full md:w-3/12 text-center" 
+            button-placement="both"
+            :default-value="1"
+            min="1" max="100"
+            v-model:value="currentCount"
+          />
+          <!-- add to cart btn -->
+          <n-button strong secondary type="primary" class="w-full md:w-auto px-2" @click="addToCart(props.product, currentCount)">
+            <template #icon>
+              <n-icon :component="Add" />
+            </template>
+            加入購物車
+          </n-button>
+        </n-flex>
+      </n-flex>
+    </n-flex>
+
+  </n-modal>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useCartStore } from '../stores/cart';
 import { ProductInfo } from '../interfaces/product'
-import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, useThemeVars } from 'naive-ui'
+import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useThemeVars } from 'naive-ui'
 import { Box } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
@@ -61,6 +106,7 @@ const cartStore = useCartStore();
 const themeVars = useThemeVars();
 
 const currentCount = ref(1);
+const showModal = ref(false);
 
 interface Props {
   product: ProductInfo,
