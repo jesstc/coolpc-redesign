@@ -43,7 +43,12 @@
                 :number="product.number"
                 isHoverContent />
             </n-flex>
-              
+
+            <n-divider style="margin: 1rem 0;" />
+
+            <n-flex class="w-full items-center text-right px-4 py-2">
+              <p class="w-full">總價： ${{ totalPrice }}</p>
+            </n-flex>
           </n-flex>
           <n-flex v-else>購物車是空的</n-flex>
 
@@ -52,6 +57,7 @@
           <n-icon :component="option.icon" size="28" />
           <h4>{{ option.label }}</h4>
         </n-flex> 
+
       </n-tab>
 
     </n-tabs>
@@ -103,7 +109,7 @@
 <script setup lang="ts">
 
 import { useRouter, useRoute } from 'vue-router';
-import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, useThemeVars } from 'naive-ui'
+import { NIcon, NDrawer, NButton, NTabs, NTab, NFlex, NPopover, NDivider, useThemeVars } from 'naive-ui'
 import { ref, Ref, computed, shallowRef, markRaw } from 'vue'
 import { useWindowSize } from '@vueuse/core';
 import { storeToRefs } from "pinia";
@@ -154,6 +160,6 @@ const handleMenuSelect = (key: string) => {
 
 // pinia
 const cartStore = useCartStore();
-const { cartItems } = storeToRefs(cartStore);
+const { cartItems, totalPrice } = storeToRefs(cartStore);
 
 </script>
