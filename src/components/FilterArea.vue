@@ -12,10 +12,9 @@
       <n-flex vertical>
         <h4>產品類別</h4>
         <n-select
-          multiple
           placeholder="請選擇產品類別"
           :options="filterOptions.categories"
-          v-model:value="filters.category"
+          :value="filters.category"
           @update:value="handleUpdateCategories"
         />
       </n-flex>
@@ -62,6 +61,7 @@ const { filters, filterOptions } = storeToRefs(productStore);
 
 onMounted(() => {
   productStore.getCategories();
+  productStore.getBrandsByCategory(filters.value.category);
 });
 
 const handleUpdateCategories = (value:string):void => {

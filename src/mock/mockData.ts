@@ -5,16 +5,17 @@ export const faker = new Faker({
   locale: [zh_TW, zh_CN, en, base],
 });
 
-export const categories = ['主機板', 'CPU', '記憶體', '螢幕', '顯示卡', '硬碟', '電源供應器', '機殼', '滑鼠', '鍵盤', '耳機', '音響', '風扇', '散熱器', '光碟機', '網卡', 'USB擴充', '路由器', '隨身碟', '桌上型電腦'];
+export const categories = ['全部', '主機板', 'CPU', '記憶體', '螢幕', '顯示卡', '硬碟', '電源供應器', '機殼', '滑鼠', '鍵盤', '耳機', '音響', '風扇', '散熱器', '光碟機', '網卡', 'USB擴充', '路由器', '隨身碟', '桌上型電腦'];
+export const categoriesForData = categories.slice(1);
 
-export const categoriesWithBrands: Record<string, string[]> = categories.reduce((acc, category) => {
+export const categoriesWithBrands: Record<string, string[]> = categoriesForData.reduce((acc, category) => {
   acc[category] = Array.from({ length: faker.number.int({ min: 5, max: 10 }) }).map(() => faker.company.name());
   return acc;
 }, {} as Record<string, string[]>);
 
 export function generateMockProducts(count: number): ProductInfo[] {
   return Array.from({ length: count }).map((_cur, index) => {
-    const category = faker.helpers.arrayElement(categories);
+    const category = faker.helpers.arrayElement(categoriesForData);
     return {
       id: index,
       name: faker.commerce.productName(),

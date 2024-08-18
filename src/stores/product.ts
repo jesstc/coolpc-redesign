@@ -11,8 +11,8 @@ export const useProductStore = defineStore('product', {
       brands: [] as Array<SelectGroupOption>,
     },
     filters: {
-      category: '' as string | null,
-      brand: '' as string | null,
+      category: '全部' as string,
+      brand: '' as string,
       priceRange: [1000, 50000] as [number, number],
     },
     sorter: {
@@ -28,7 +28,7 @@ export const useProductStore = defineStore('product', {
       return state.productItems.filter((item) => {
         const [minPrice, maxPrice] = state.filters.priceRange;
 
-        const categoryMatch = state.filters.category?.length ? state.filters.category.includes(item.category) : true;
+        const categoryMatch = (state.filters.category?.length && state.filters.category != "全部") ? state.filters.category.includes(item.category) : true;
         const brandMatch = state.filters.brand?.length ? state.filters.brand.includes(item.brand) : true;
         const priceMatch = item.price >= minPrice && item.price <= maxPrice;
         
@@ -65,6 +65,7 @@ export const useProductStore = defineStore('product', {
     async getCategories() {
       try {
         const res = await axios.get('/api/categories');
+        this.filterOptions.categories = [];
         for (const category of res.data.categories) {
           const cur_cat:SelectOption = {label: category, value: category};
           this.filterOptions.categories.push(cur_cat);
@@ -87,7 +88,6 @@ export const useProductStore = defineStore('product', {
           };
         });
         this.filterOptions.brands = newBrands; 
-        // await nextTick(); 
       } catch (err) {
         console.error('獲取資料時發生錯誤:', err);
       }
@@ -98,7 +98,6 @@ export const useProductStore = defineStore('product', {
       if(category !== undefined) this.filters.category = category;
       if(brand !== undefined) this.filters.brand = brand;
       if(price !== undefined) this.filters.priceRange = price;
-      console.log(this.filters)
     },
     updateSorter(base: 'category' | 'price' | 'brand', isAsc: boolean) {
       this.sorter.base = base;

@@ -7,15 +7,33 @@
       </n-layout-sider>
 
       <n-layout class="pl-8">
-        <n-layout-header class="flex justify-between items-center">
-          <h1>產品列表</h1>
+        <n-layout-header>
+          <n-flex vertical>
+            <n-flex justify="space-between" class="items-center">
+              <h1>產品列表</h1>
+              <SortingBtn />
+            </n-flex>
 
-          <SortingBtn />
+            <!-- category tabs -->
+            <div
+              class="overflow-x-auto w-full whitespace-nowrap scrollbar-hide"
+              :style="{backgroundColor: themeVars.tabColor}" >
+              <n-tabs 
+                type="segment" tab-style="padding: 8px 12px;" animated 
+                class="inline-block"
+                :value="filters.category"
+                @update:value="handleUpdateCategory" >
+                <n-tab 
+                  v-for="(category, key) in filterOptions.categories"
+                  :key="key" :name="(category.label as string)" />
+              </n-tabs>
+            </div>
+          </n-flex>
         </n-layout-header>
 
         <n-layout-content class="py-8">
-          <div class="flex flex-wrap justify-stretch gap-6">
-            <ProductCard v-for="(product, index) in filteredItems" :key="index" :product="product" />
+          <div class="flex flex-wrap gap-7">
+            <ProductCard v-for="(product, key) in filteredItems" :key="key" :product="product" />
           </div>
         </n-layout-content>
       </n-layout>
@@ -28,16 +46,36 @@
 import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
-import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NSpin } from 'naive-ui'
+import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NSpin, NTabs, NTab, NFlex, useThemeVars } from 'naive-ui'
 import { onMounted } from 'vue'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
 
+const themeVars = useThemeVars();
+
 // get all product data
 const productStore = useProductStore();
-const { filteredItems, fetching } = storeToRefs(productStore);
+const { filteredItems, fetching, filterOptions, filters } = storeToRefs(productStore);
 
 onMounted(() => {
   productStore.fetchProductData();
+  productStore.getCategories();
 });
+
+const handleUpdateCategory = (value: string) => {
+  productStore.updateFilters(value);
+  productStore.getBrandsByCategory(value);
+  console.log(filters.value.category)
+}
+
 </script>
+
+<style scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>

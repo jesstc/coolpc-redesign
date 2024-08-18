@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-import { generateMockProducts, categories, categoriesWithBrands } from './mockData'
+import { generateMockProducts, categories, categoriesForData, categoriesWithBrands } from './mockData'
 
 interface MockOptions {
   url: string;
@@ -16,17 +16,20 @@ Mock.mock('/api/products', 'get', {
 
 // get categories of the product
 Mock.mock('/api/categories', 'get', {
-  categories: categories.sort(),
+  categories: categories,
   code: 200,
 });
 
 // get the brand name by given category
 Mock.mock(/\/api\/brands/, 'get', (options:MockOptions) => {
-  const url_categories = options.url.split('?')[1].split(',').sort();
+  const url_category = options.url.split('?')[1];
   let brands = [];
-  for (const category of url_categories) {
-    brands.push({category: category, brand: categoriesWithBrands[category]})
-  }
+  if (url_category == "全部") {
+    for (const category of categoriesForData) {
+      brands.push({category: category, brand: categoriesWithBrands[category]});
+    }
+  } else brands.push({category: url_category, brand: categoriesWithBrands[url_category]});
+  console.log(url_category ,brands)
   return {
     brands,
     code: 200,

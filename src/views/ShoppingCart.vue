@@ -40,7 +40,6 @@ import { computed } from 'vue'
 import { NFlex, useThemeVars } from 'naive-ui'
 import { storeToRefs } from "pinia";
 import { useCartStore } from '../stores/cart';
-// import products from '../../mock/mockData';
 
 // style
 const themeVars = useThemeVars();
