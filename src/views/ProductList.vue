@@ -32,7 +32,7 @@
         </n-layout-header>
 
         <n-layout-content class="py-8">
-          <n-grid cols="1 s:1 m:2 l:3 xl:4" responsive="screen">
+          <n-grid cols="1 s:1 m:2 l:3 xl:4" responsive="screen" :x-gap="24" :y-gap="32">
             <n-grid-item v-for="(product, key) in filteredItems" :key="key">
               <ProductCard :product="product" />
             </n-grid-item>

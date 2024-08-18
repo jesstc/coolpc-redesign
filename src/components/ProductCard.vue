@@ -6,26 +6,28 @@
     </template>
 
     <template #header>
-      <h3 @click="showModal = true">【{{ props.product.category }}】 {{ props.product.name }}</h3>
+      <h3 @click="showModal = true" :style="{color:themeVars.primaryColor}">
+        {{ props.product.category }}｜{{ props.product.name }}
+      </h3>
     </template>
 
     <template #header-extra>
       <n-tooltip v-if="props.product.openboxUrl" trigger="hover" placement="bottom">
         <template #trigger>
           <n-button strong secondary circle
-            tag="a" target="_blank"
+            tag="a" target="_blank" type="tertiary"
             :href="props.product.openboxUrl">
             <template #icon>
               <n-icon :component="Box" />
             </template>
           </n-button>
         </template>
-        開箱討論
+        開箱討論區
       </n-tooltip>
     </template>
 
     <template #default>
-      <n-badge :value="props.product.brand" :color="themeVars.iconColorHover" />
+      <n-badge :value="props.product.brand" color="grey" />
       <br>
       <p @click="showModal = true">{{ props.product.description || '' }}</p>
     </template>
@@ -44,7 +46,7 @@
           v-model:value="currentCount"
         />
         <!-- add to cart btn -->
-        <n-button strong secondary type="primary" class="w-full lg:w-auto px-2" @click="addToCart(props.product, currentCount)">
+        <n-button strong type="primary" class="w-full lg:w-auto px-2" @click="addToCart(props.product, currentCount)">
           <template #icon>
             <n-icon :component="Add" />
           </template>
@@ -63,29 +65,55 @@
     <n-flex justify="space-around" class="flex-row">
       <img class="object-cover w-4/12" :src="props.product.imgUrl">
 
-      <n-flex vertical class="w-7/12">
-        <h3 :style="{color:themeVars.primaryColor}">【{{ props.product.category }}】 {{ props.product.name }}</h3>
-        <n-flex vertical>
-          <n-badge :value="props.product.brand" :color="themeVars.iconColorHover" />
-          <p>{{ props.product.description }}</p>
-        </n-flex>
-        <p class="font-bold" :style="{color:themeVars.primaryColor}">${{ props.product.price }}</p>
+      <n-flex justify="space-between" vertical class="w-7/12">
+        <n-flex vertical class="h-full">
+          <n-flex justify="space-between">
+            <h3 :style="{color:themeVars.primaryColor}">{{ props.product.category }}｜{{ props.product.name }}</h3>
+            <n-flex class="mb-4">
+              <n-button strong secondary
+                tag="a" target="_blank" type="tertiary"
+                :href="props.product.openboxUrl">
+                <template #icon>
+                  <n-icon :component="Box" />
+                </template>
+                開箱討論區
+              </n-button>
+              <n-button strong secondary
+                tag="a" target="_blank" type="info"
+                :href="props.product.openboxUrl">
+                <template #icon>
+                  <n-icon :component="Compare" />
+                </template>
+                加入比較
+              </n-button>
+            </n-flex>
+          </n-flex>
 
-        <n-flex justify="end">
-          <!-- number btn group -->
-          <n-input-number class="w-full md:w-3/12 text-center" 
-            button-placement="both"
-            :default-value="1"
-            min="1" max="100"
-            v-model:value="currentCount"
-          />
-          <!-- add to cart btn -->
-          <n-button strong secondary type="primary" class="w-full md:w-auto px-2" @click="addToCart(props.product, currentCount)">
-            <template #icon>
-              <n-icon :component="Add" />
-            </template>
-            加入購物車
-          </n-button>
+          <n-flex vertical>
+            <n-badge :value="props.product.brand" color="grey" />
+            <p>{{ props.product.description }}</p>
+          </n-flex>
+        </n-flex>
+
+        <n-flex justify="space-between" class="w-full">
+          <p class="font-bold" :style="{color:themeVars.primaryColor}">${{ props.product.price }}</p>
+
+          <n-flex justify="end">
+            <!-- number btn group -->
+            <n-input-number class="w-full md:w-3/12 text-center" 
+              button-placement="both"
+              :default-value="1"
+              min="1" max="100"
+              v-model:value="currentCount"
+            />
+            <!-- add to cart btn -->
+            <n-button strong type="primary" class="w-full md:w-auto px-2" @click="addToCart(props.product, currentCount)">
+              <template #icon>
+                <n-icon :component="Add" />
+              </template>
+              加入購物車
+            </n-button>
+          </n-flex>
         </n-flex>
       </n-flex>
     </n-flex>
@@ -96,9 +124,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useCartStore } from '../stores/cart';
-import { ProductInfo } from '../interfaces/product'
-import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui'
-import { Box } from '@vicons/carbon';
+import { ProductInfo } from '../interfaces/product';
+import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui';
+import { Box, Compare } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
 const cartStore = useCartStore();

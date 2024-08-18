@@ -9,7 +9,7 @@ export const categories = ['全部', '主機板', 'CPU', '記憶體', '螢幕', 
 export const categoriesForData = categories.slice(1);
 
 export const categoriesWithBrands: Record<string, string[]> = categoriesForData.reduce((acc, category) => {
-  acc[category] = Array.from({ length: faker.number.int({ min: 5, max: 10 }) }).map(() => faker.company.name());
+  acc[category] = Array.from({ length: faker.number.int({ min: 5, max: 10 }) }).map(() => faker.lorem.word({ length: { min: 5, max: 7 } }) );
   return acc;
 }, {} as Record<string, string[]>);
 
