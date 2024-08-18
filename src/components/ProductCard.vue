@@ -94,16 +94,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { ProductInfo } from '../interfaces/product'
-import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useThemeVars } from 'naive-ui'
+import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui'
 import { Box } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
 const cartStore = useCartStore();
 
 const themeVars = useThemeVars();
+const message = useMessage();
 
 const currentCount = ref(1);
 const showModal = ref(false);
@@ -115,5 +116,6 @@ const props = defineProps<Props>();
 
 const addToCart = (product:ProductInfo, count:number) => {
   cartStore.updateItem(product, count, true);
+  message.success(`${product.name} 已加入購物車`);
 }
 </script>

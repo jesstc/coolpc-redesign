@@ -1,31 +1,33 @@
 <template>
   <n-config-provider :theme="isDarkTheme ? darkTheme : lightTheme">
-    <n-layout>
-      <n-layout-header bordered class="fixed z-10">
-        <Navbar @updateTheme="updateTheme" />
-      </n-layout-header>
+    <n-message-provider placement="bottom-right">
+      <n-layout>
+        <n-layout-header bordered class="fixed z-10">
+          <Navbar @updateTheme="updateTheme" />
+        </n-layout-header>
 
-      <n-layout-content class="mx-8 mt-32 mb-4 md:mx-24 md:mb-14 h-full">
-        <!-- views -->
-        <router-view />
-      </n-layout-content>
+        <n-layout-content class="mx-8 mt-32 mb-4 md:mx-24 md:mb-14 h-full">
+          <!-- views -->
+          <router-view />
+        </n-layout-content>
 
-      <n-layout-footer bordered class="px-8 py-6 md:px-24 h-full">
-        <n-space class="flex gap-8 items-center">
-          <img
-            class="cursor-pointer h-14 md:h-16" alt="CoolPC Logo"
-            src="./assets/logo.png"
-          />
-          <span>Copyright 2024 Jessica Huang | 7jesstc1999@gmail.com </span>
-        </n-space>
-      </n-layout-footer>
-      
-    </n-layout>
+        <n-layout-footer bordered class="px-8 py-6 md:px-24 h-full">
+          <n-space class="flex gap-8 items-center">
+            <img
+              class="cursor-pointer h-14 md:h-16" alt="CoolPC Logo"
+              src="./assets/logo.png"
+            />
+            <span>Copyright 2024 Jessica Huang | 7jesstc1999@gmail.com </span>
+          </n-space>
+        </n-layout-footer>
+        
+      </n-layout>
+    </n-message-provider>
   </n-config-provider>
 </template>
 
 <script setup lang="ts">
-import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NSpace } from 'naive-ui'
+import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NMessageProvider, NSpace } from 'naive-ui'
 import { ref, Ref } from 'vue'
 import Navbar from './components/Navbar.vue'
 
