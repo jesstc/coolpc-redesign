@@ -27,16 +27,17 @@
           </template>
 
           <!-- shopping cart hover content -->
-          <n-flex v-if="cartItems.length">
-            <n-flex justify="space-around" class="w-full items-center text-center py-2" :style="{ backgroundColor: themeVars.tableColorHover }">
-              <span>產品名稱</span>
-              <span>單價</span>
-              <span>數量</span>
-              <span>操作</span>
+          <n-flex v-if="cartItems.length" vertical>
+            <n-flex justify="space-around" class="w-full items-center text-center mt-2 py-2">
+              <span class="flex-auto w-2/6">產品名稱</span>
+              <span class="flex-auto w-1/6">單價</span>
+              <span class="flex-auto w-1/6">數量</span>
+              <span class="flex-auto w-1/6">操作</span>
             </n-flex>
 
             <n-flex vertical v-for="(item, index) in cartItems" :key="index">
-              <span>{{ item.category }}</span>
+              <n-divider style="margin: 0.5rem 0;" />
+              <span :style="{ color: themeVars.clearColorHover }">{{ item.category }}</span>
               <ShoppingCartItem v-for="product in item.products" 
                 :key="product.id"
                 :product="product.productinfo"
@@ -47,7 +48,7 @@
             <n-divider style="margin: 1rem 0;" />
 
             <n-flex class="w-full items-center text-right px-4 py-2">
-              <p class="w-full">總價： ${{ totalPrice }}</p>
+              <p class="w-full font-bold">總價： ${{ totalPrice }}</p>
             </n-flex>
           </n-flex>
           <n-flex v-else>購物車內沒有產品</n-flex>

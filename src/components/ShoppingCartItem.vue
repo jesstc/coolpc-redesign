@@ -1,6 +1,7 @@
 <template>
   <n-flex justify="space-around"
-    class="w-full h-fit py-4 overflow-hidden items-center"
+    class="w-full h-fit overflow-hidden items-center"
+    :class="props.isHoverContent ? 'py-1' : 'py-4'"
     :style="!props.isHoverContent && { backgroundColor: themeVars.tableColorHover }">
 
     <!-- product img -->
@@ -15,15 +16,15 @@
         {{ props.product.description }}
       </span>
     </n-flex>
-    <n-flex v-else class="w-2/12">
+    <n-flex v-else class="flex-auto w-2/6 pl-2">
       <span>{{ props.product.name }}</span>
     </n-flex>
 
     <!-- per price -->
-    <p>${{ props.product.price }}</p>
+    <p :class="props.isHoverContent && 'flex-auto w-1/6 text-center'">${{ props.product.price }}</p>
 
     <!-- number btn group -->
-    <n-input-number class="h-fit text-center" :class="props.isHoverContent ? 'w-2/12' : 'w-1/12'"
+    <n-input-number class="h-fit text-center" :class="props.isHoverContent ? 'flex-auto w-1/6' : 'w-1/12'"
       button-placement="both"
       min="1" max="100"
       v-model:value="currentCount"
@@ -33,7 +34,10 @@
     <p v-if="!props.isHoverContent">${{ props.number*props.product.price }}</p>
     
     <!-- delete btn -->
-    <n-button strong secondary type="error" class="h-fit py-1" @click="removeItem(props.product.id)">
+    <n-button 
+      strong secondary type="error" 
+      class="h-fit py-1" :class="props.isHoverContent && 'flex-auto w-1/6 py-2'"
+      @click="removeItem(props.product.id)">
       <template #icon>
         <n-icon :component="TrashOutline" />
       </template>
