@@ -8,3 +8,8 @@ export interface ProductInfo {
   description: string;
   openboxUrl?: string;
 }
+
+export interface ComparedProducts {
+  category: string;
+  products: Array<ProductInfo>;
+}
