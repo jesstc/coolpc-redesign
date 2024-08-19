@@ -78,9 +78,8 @@
                 </template>
                 開箱討論區
               </n-button>
-              <n-button strong secondary
-                tag="a" target="_blank" type="info"
-                :href="props.product.openboxUrl">
+              <n-button strong secondary type="info"
+                @click="addToComparedItem(props.product)" >
                 <template #icon>
                   <n-icon :component="Compare" />
                 </template>
@@ -124,12 +123,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useCartStore } from '../stores/cart';
+import { useComparisonStore } from '../stores/comparison';
 import { ProductInfo } from '../interfaces/product';
 import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui';
 import { Box, Compare } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
 const cartStore = useCartStore();
+const comparisonStore = useComparisonStore();
 
 const themeVars = useThemeVars();
 const message = useMessage();
@@ -144,6 +145,11 @@ const props = defineProps<Props>();
 
 const addToCart = (product:ProductInfo, count:number) => {
   cartStore.updateItem(product, count, true);
-  message.success(`${product.name} 已加入購物車`);
+  message.success(`[ ${product.name} ] 已加入購物車`);
+}
+
+const addToComparedItem = (product:ProductInfo) => {
+  comparisonStore.addComparedItem(product);
+  message.info(`[ ${product.name} ] 已加入產品比較`);
 }
 </script>

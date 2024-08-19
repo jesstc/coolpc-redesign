@@ -1,5 +1,5 @@
 <template>
-  <n-flex vertical :size="32" class="overflow-scroll mb-12" :style="containerStyle">
+  <n-flex vertical :size="32" class="overflow-scroll mb-12">
     <h1>購物車</h1>
 
     <n-flex vertical :size="18">
@@ -36,16 +36,12 @@
   
 <script setup lang="ts">
 import ShoppingCartItem from '../components/ShoppingCartItem.vue'
-import { computed } from 'vue'
 import { NFlex, useThemeVars } from 'naive-ui'
 import { storeToRefs } from "pinia";
 import { useCartStore } from '../stores/cart';
 
 // style
 const themeVars = useThemeVars();
-const containerStyle = computed(() => {
-  return { height: 'calc(100vh-6rem)' };
-});
 
 // pinia
 const cartStore = useCartStore();
