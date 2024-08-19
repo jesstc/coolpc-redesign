@@ -27,7 +27,7 @@
     </template>
 
     <template #default>
-      <n-badge :value="props.product.brand" color="grey" />
+      <n-tag :bordered="false">{{ props.product.brand }}</n-tag>
       <br>
       <p @click="showModal = true">{{ props.product.description || '' }}</p>
     </template>
@@ -89,7 +89,7 @@
           </n-flex>
 
           <n-flex vertical>
-            <n-badge :value="props.product.brand" color="grey" />
+            <n-tag :bordered="false" class="w-fit">{{ props.product.brand }}</n-tag>
             <p>{{ props.product.description }}</p>
           </n-flex>
         </n-flex>
@@ -125,7 +125,7 @@ import { ref } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useComparisonStore } from '../stores/comparison';
 import { ProductInfo } from '../interfaces/product';
-import { NIcon, NCard, NButton, NInputNumber, NTooltip, NBadge, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui';
+import { NIcon, NCard, NButton, NInputNumber, NTooltip, NTag, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui';
 import { Box, Compare } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 

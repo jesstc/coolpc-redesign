@@ -38,7 +38,9 @@
         <p class="w-full h-36 text-wrap flex items-center px-4">{{ product.description }}</p>
 
         <!-- 品牌 -->
-        <n-badge :value="product.brand" color="grey" />
+        <n-tag :bordered="false">
+          {{ product.brand }}
+        </n-tag>
 
         <!-- 價格 -->
         <p>${{ product.price }}</p>
@@ -90,7 +92,7 @@
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { NFlex, NBadge, NTabs, NTab, NButton, NModal, NSelect, NIcon, useThemeVars } from 'naive-ui'
+import { NFlex, NTag, NTabs, NTab, NButton, NModal, NSelect, NIcon, useThemeVars } from 'naive-ui'
 import { categoriesForData } from '../mock/mockData';
 import { storeToRefs } from "pinia";
 import { useComparisonStore } from '../stores/comparison';
