@@ -62,12 +62,18 @@
       </n-flex>
 
       <!-- add btn -->
-      <n-button @click="showModal = true">
-        新增比較產品
-      </n-button>
+      <n-float-button 
+        shape="square" position="relative"
+        class="flex flex-col items-center justify-center p-2 my-32 ml-16"
+        :style="{width: 'auto', height: 'auto', backgroundColor: themeVars.primaryColorSuppl, color: 'white' }"
+        @click="showModal = true" >
+        <n-icon :component="AddCircleOutline" :size="44"  class="text-3xl mt-2" />
+        <template #description>
+          <h4 class="my-2">新增比較產品</h4>
+        </template>
+      </n-float-button>
       <n-modal
         v-model:show="showModal"
-        :mask-closable="false"
         preset="dialog"
         :title="`新增比較產品（產品類別：${comparedCategory}）`"
         positive-text="新增"
@@ -79,7 +85,7 @@
           <n-select
             :options="productNames"
             placeholder="請選擇想要新增比較的產品"
-            class="w-full"
+            class="w-full mt-6 mb-8"
             @update:value="changeAddedItem"
           />
         </template>
@@ -92,13 +98,13 @@
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { NFlex, NTag, NTabs, NTab, NButton, NModal, NSelect, NIcon, useThemeVars } from 'naive-ui'
+import { NFlex, NTag, NTabs, NTab, NButton, NFloatButton, NModal, NSelect, NIcon, useThemeVars } from 'naive-ui'
 import { categoriesForData } from '../mock/mockData';
 import { storeToRefs } from "pinia";
 import { useComparisonStore } from '../stores/comparison';
 import { useProductStore } from '../stores/product';
 import { ProductInfo } from '../interfaces/product';
-import { TrashOutline } from '@vicons/ionicons5'
+import { TrashOutline, AddCircleOutline } from '@vicons/ionicons5'
 
 const selectedProduct = ref<ProductInfo | null>(null)
 
