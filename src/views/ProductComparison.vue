@@ -64,7 +64,7 @@
       <!-- add btn -->
       <n-float-button 
         shape="square" position="relative"
-        class="flex flex-col items-center justify-center p-2 my-32 ml-16"
+        class="flex flex-col items-center justify-center p-2 ml-16"
         :style="{width: 'auto', height: 'auto', backgroundColor: themeVars.primaryColorSuppl, color: 'white' }"
         @click="showModal = true" >
         <n-icon :component="AddCircleOutline" :size="44"  class="text-3xl mt-2" />
