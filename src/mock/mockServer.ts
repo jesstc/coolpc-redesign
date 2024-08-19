@@ -29,7 +29,6 @@ Mock.mock(/\/api\/brands/, 'get', (options:MockOptions) => {
       brands.push({category: category, brand: categoriesWithBrands[category]});
     }
   } else brands.push({category: url_category, brand: categoriesWithBrands[url_category]});
-  console.log(url_category ,brands)
   return {
     brands,
     code: 200,

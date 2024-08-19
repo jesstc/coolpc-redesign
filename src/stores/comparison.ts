@@ -23,8 +23,6 @@ export const useComparisonStore = defineStore('comparison', {
         if (addedItemIndex === -1) addedCategory.products.push(product);  // avoid dupilicated
       }
       else this.comparedItems.push({ category: product.category, products: [product] });
-
-      console.log(this.comparedItems);
     },
 
     // remove item

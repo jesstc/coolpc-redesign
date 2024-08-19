@@ -67,7 +67,6 @@ onMounted(() => {
 const handleUpdateCategory = (value: string) => {
   productStore.updateFilters(value);
   productStore.getBrandsByCategory(value);
-  console.log(filters.value.category)
 }
 
 </script>

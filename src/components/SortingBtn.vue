@@ -37,7 +37,6 @@ const { sorter } = storeToRefs(productStore);
 const sorting = (sortType: 'category' | 'price' | 'brand'):void => {
   let isAsc:boolean = sorter.value.base == sortType ? !sorter.value.isAsc : true;
   productStore.updateSorter(sortType, isAsc);
-  console.log(sorter.value)
 }
 
 // decide the display btn
