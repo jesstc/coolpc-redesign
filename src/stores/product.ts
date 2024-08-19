@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export const useProductStore = defineStore('product', {
   state: () => ({
-    fetching: false,
+    fetching: false as boolean,
     filterOptions: {
       categories: [] as Array<SelectOption>,
       brands: [] as Array<SelectGroupOption>,
@@ -16,10 +16,9 @@ export const useProductStore = defineStore('product', {
       priceRange: [1000, 50000] as [number, number],
     },
     sorter: {
-      base: 'category', 
-      isAsc: true,
+      base: 'category' as 'category' | 'price' | 'brand', 
+      isAsc: true as boolean,
     },
-    productNames: [] as Array<SelectGroupOption>,
     productItems: [] as Array<ProductInfo>,
   }),
 
@@ -105,21 +104,10 @@ export const useProductStore = defineStore('product', {
       this.sorter.isAsc = isAsc;
     },
 
-    // get product names (groupby brands) based on the selected categories
-    getProductNameByCategory(category: string) {
-      const products = this.productItems.filter((item) => item.category === category);
-      products.sort((a, b) => a.name.localeCompare(b.name));
-
-      // get brands 
-      const brands = [...new Set(products.map(product => product.brand))];
-      this.productNames = brands.map((brand: string) => {
-        return {
-          type: 'group',
-          label: brand,
-          key: brand,
-          children: products.filter((item) => item.brand === brand).map((item) => ({ label:item.name, value:item.name })),
-        };
-      });
+    // for comparison
+    // get product info by name
+    getProductInfoByName(name: string):ProductInfo|null {
+      return this.productItems.find((item) => item.name === name) || null;
     },
   }
 });

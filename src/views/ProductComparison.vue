@@ -9,7 +9,8 @@
       <n-tabs 
         type="segment" tab-style="padding: 8px 12px;" animated 
         class="inline-block"
-        v-model:value="selectedCategory" >
+        :value="comparedCategory"
+        @update:value="handleUpdateCategory" >
         <n-tab 
           v-for="(category, key) in categoriesForData"
           :key="key" :name="category" />
@@ -19,26 +20,22 @@
     </div>
 
     <!-- comparison table -->
-    <div class="overflow-x-auto w-5/6 whitespace-nowrap scrollbar-hide flex gap-8 mt-8">
+    <div class="overflow-x-auto w-5/6 whitespace-nowrap scrollbar-hide flex items-center gap-8 mt-8">
 
       <n-flex
-        v-for="(product, index) in comparedProducts" :key="index"
+        v-if="categoryComparedItems"
+        v-for="(product, key) in categoryComparedItems" :key="key"
         :size="24" vertical
         class="flex-col items-center text-center w-64 flex-shrink-0" >
 
         <!-- 產品名稱 -->
-        <n-select
-          :value="product.name"
-          :options="productNames"
-          placeholder="請選擇想要比較的產品"
-          class="w-full"
-        />
+        <h3 :style="{color: themeVars.primaryColor}">{{ product.name }}</h3>
 
         <!-- 產品圖片 -->
         <img :src="product.imgUrl" :alt="product.name" class="w-64 h-64 object-contain" />
 
         <!-- 描述 -->
-        <p class="w-full h-2/6 text-wrap flex items-center px-4">{{ product.description }}</p>
+        <p class="w-full h-36 text-wrap flex items-center px-4">{{ product.description }}</p>
 
         <!-- 品牌 -->
         <n-badge :value="product.brand" color="grey" />
@@ -61,14 +58,39 @@
         </n-button>
 
       </n-flex>
+
+      <!-- add btn -->
+      <n-button @click="showModal = true">
+        新增比較產品
+      </n-button>
+      <n-modal
+        v-model:show="showModal"
+        :mask-closable="false"
+        preset="dialog"
+        :title="`新增比較產品（產品類別：${comparedCategory}）`"
+        positive-text="新增"
+        negative-text="取消"
+        @positive-click="addSelectedProduct"
+        @negative-click="showModal = false"
+      >
+        <template #default>
+          <n-select
+            :options="productNames"
+            placeholder="請選擇想要新增比較的產品"
+            class="w-full"
+            @update:value="changeAddedItem"
+          />
+        </template>
+      </n-modal>
+      
     </div>
 
   </n-flex>
 </template>
   
 <script setup lang="ts">
-import { computed, ref, h, onMounted, watch } from 'vue'
-import { NFlex, NBadge, NTabs, NTab, NButton, NSelect, NIcon, useThemeVars } from 'naive-ui'
+import { ref, onMounted } from 'vue'
+import { NFlex, NBadge, NTabs, NTab, NButton, NModal, NSelect, NIcon, useThemeVars } from 'naive-ui'
 import { categoriesForData } from '../mock/mockData';
 import { storeToRefs } from "pinia";
 import { useComparisonStore } from '../stores/comparison';
@@ -84,29 +106,42 @@ const themeVars = useThemeVars();
 // pinia
 const comparisonStore = useComparisonStore();
 const productStore = useProductStore();
-const { productNames } = storeToRefs(productStore);
+const { productNames, comparedCategory, categoryComparedItems } = storeToRefs(comparisonStore);
+const { productItems } = storeToRefs(productStore);
 
-const selectedCategory = ref("主機板");
-const comparedProducts = computed(() => comparisonStore.getComparedByCategory(selectedCategory.value));
+const showModal = ref(false);
 
 onMounted(() => {
-  productStore.getProductNameByCategory(selectedCategory.value);
+  comparisonStore.updateCategoryComparedItems();
+  comparisonStore.getProductNameByCategory(productItems.value);
 });
 
-watch(selectedCategory, (newCategory: string) => {
-  productStore.getProductNameByCategory(newCategory);
-});
+// change category
+const handleUpdateCategory = (value:string) => {
+  comparisonStore.changeCategory(value);
+  comparisonStore.updateCategoryComparedItems();
+  comparisonStore.getProductNameByCategory(productItems.value);
+}
 
 // add item
 const addSelectedProduct = () => {
   if (selectedProduct.value) {
-    comparisonStore.addComparedItem(selectedProduct.value)
-    selectedProduct.value = null
+    comparisonStore.addComparedItem(selectedProduct.value);
+    comparisonStore.updateCategoryComparedItems()
+    comparisonStore.updateSelection();
+    selectedProduct.value = null;
+    showModal.value = false;
   }
 }
 // remove item
 const removeProduct = (productId: number) => {
-  comparisonStore.removeComparedItem(productId)
+  comparisonStore.removeComparedItem(productId);
+  comparisonStore.updateCategoryComparedItems()
+  comparisonStore.updateSelection();
+}
+
+const changeAddedItem = (value:string) => {
+  selectedProduct.value = productStore.getProductInfoByName(value);
 }
 </script>
 
