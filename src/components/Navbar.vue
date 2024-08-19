@@ -50,7 +50,7 @@
               <p class="w-full">總價： ${{ totalPrice }}</p>
             </n-flex>
           </n-flex>
-          <n-flex v-else>購物車是空的</n-flex>
+          <n-flex v-else>購物車內沒有產品</n-flex>
 
         </n-popover>
         <n-flex v-else class="flex-row items-center gap-4">

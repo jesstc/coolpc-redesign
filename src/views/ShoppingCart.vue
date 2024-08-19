@@ -14,7 +14,7 @@
         <span class="w-1/12">操作</span>
       </n-flex>
 
-      <n-flex v-for="(item, index) in cartItems" :key="index" vertical :size="8">
+      <n-flex v-if="cartItems.length!=0" v-for="(item, index) in cartItems" :key="index" vertical :size="8">
         <n-flex justify="space-between" class="w-full items-center py-2" :style="{ color: themeVars.closeIconColorHover }">
           <span>{{ item.category }}</span>
         </n-flex>
@@ -25,6 +25,10 @@
           :number="product.number"
         />
       </n-flex>
+
+    <n-flex v-else>
+      <p class="w-full text-center">購物車內沒有產品</p>
+    </n-flex>
       
     </n-flex>
 
