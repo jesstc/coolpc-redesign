@@ -19,6 +19,7 @@ export const useProductStore = defineStore('product', {
       base: 'category', 
       isAsc: true,
     },
+    productNames: [] as Array<SelectGroupOption>,
     productItems: [] as Array<ProductInfo>,
   }),
 
@@ -102,6 +103,23 @@ export const useProductStore = defineStore('product', {
     updateSorter(base: 'category' | 'price' | 'brand', isAsc: boolean) {
       this.sorter.base = base;
       this.sorter.isAsc = isAsc;
+    },
+
+    // get product names (groupby brands) based on the selected categories
+    getProductNameByCategory(category: string) {
+      const products = this.productItems.filter((item) => item.category === category);
+      products.sort((a, b) => a.name.localeCompare(b.name));
+
+      // get brands 
+      const brands = [...new Set(products.map(product => product.brand))];
+      this.productNames = brands.map((brand: string) => {
+        return {
+          type: 'group',
+          label: brand,
+          key: brand,
+          children: products.filter((item) => item.brand === brand).map((item) => ({ label:item.name, value:item.name })),
+        };
+      });
     },
   }
 });
