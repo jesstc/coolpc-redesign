@@ -9,7 +9,7 @@
 
     <!-- menu items -->
     <n-tabs 
-      v-if="!isMobile" 
+      v-if="isDesktop" 
       size="large" justify-content="end" animated
       :value="selectedValue"
       @update:value="handleMenuSelect">
@@ -64,12 +64,12 @@
     </n-tabs>
 
     <!-- dark/light theme switch -->
-    <n-button v-if="!isMobile" @click="changeTheme">
+    <n-button v-if="isDesktop" @click="changeTheme">
       {{ isDarkTheme ? '淺色模式' : '深色模式' }}
     </n-button>
 
     <!-- menu btn (for mobile device) -->
-    <button v-if="isMobile" @click="isMobileMenuOpen = !isMobileMenuOpen">
+    <button v-if="!isDesktop" @click="isMobileMenuOpen = !isMobileMenuOpen">
       <n-icon :component="MenuOutline" size="24" />
     </button>
 
@@ -124,7 +124,7 @@ const themeVars = useThemeVars();
 // handle the switch of nav mode
 const isMobileMenuOpen = ref(false);
 const { width } = useWindowSize();
-const isMobile = computed(() => width.value < 768);
+const isDesktop = computed(() => width.value > 1024);
 
 // change dark/light theme
 let isDarkTheme: Ref<boolean> = ref<boolean>(false);
