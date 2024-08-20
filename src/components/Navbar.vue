@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex flex-row py-4 items-center justify-between gap-16 px-8 md:px-24">
+  <nav class="flex flex-row py-4 items-center justify-between gap-8 px-8 md:px-24">
 
     <img
       class="cursor-pointer h-8 md:h-16" alt="CoolPC Logo"
@@ -18,7 +18,8 @@
         :key="option.key"
         :name="option.link"
         class="mx-8">
-        <n-popover v-if="option.key === 'shopping-cart'" style="max-height: 70vh" trigger="hover" :width="500" scrollable>
+
+        <n-popover v-if="option.key === 'shopping-cart'" style="max-height: 70vh" trigger="hover" :width="cartItems.length ? 500 : 200" scrollable>
           <template #trigger>
             <n-flex class="flex-row items-center gap-4">
               <n-icon :component="option.icon" size="28" />
@@ -52,15 +53,14 @@
             </n-flex>
           </n-flex>
           <n-flex v-else>購物車內沒有產品</n-flex>
-
         </n-popover>
+
         <n-flex v-else class="flex-row items-center gap-4">
           <n-icon :component="option.icon" size="28" />
           <h4>{{ option.label }}</h4>
         </n-flex> 
 
       </n-tab>
-
     </n-tabs>
 
     <!-- dark/light theme switch -->
@@ -69,7 +69,7 @@
     </n-button>
 
     <!-- menu btn (for mobile device) -->
-    <button v-else @click="toggleMobileMenu">
+    <button v-if="isMobile" @click="isMobileMenuOpen = !isMobileMenuOpen">
       <n-icon :component="MenuOutline" size="24" />
     </button>
 
@@ -125,9 +125,6 @@ const themeVars = useThemeVars();
 const isMobileMenuOpen = ref(false);
 const { width } = useWindowSize();
 const isMobile = computed(() => width.value < 768);
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value;
-};
 
 // change dark/light theme
 let isDarkTheme: Ref<boolean> = ref<boolean>(false);

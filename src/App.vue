@@ -6,7 +6,7 @@
           <Navbar @updateTheme="updateTheme" />
         </n-layout-header>
 
-        <n-layout-content class="flex-grow mt-32 mx-8 mb-4 md:mx-24 md:mb-14 h-full">
+        <n-layout-content class="flex-grow mt-24 mx-8 mb-4 md:mt-32 md:mx-24 md:mb-14 h-full">
           <!-- views -->
           <router-view />
         </n-layout-content>
