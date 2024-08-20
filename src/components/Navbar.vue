@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex flex-row py-4 items-center justify-between gap-8 px-8 md:px-24">
+  <nav class="flex flex-row py-4 items-center justify-between gap-8 px-8 md:px-24 shadow-sm">
 
     <img
       class="cursor-pointer h-8 md:h-16" alt="CoolPC Logo"

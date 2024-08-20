@@ -2,7 +2,7 @@
   <n-flex justify="space-around"
     class="w-full h-fit overflow-hidden items-center"
     :class="props.isHoverContent ? 'py-1' : 'p-4'"
-    :style="!props.isHoverContent && { backgroundColor: themeVars.tableColorHover }">
+    :style="!props.isHoverContent && { backgroundColor: themeVars.codeColor }">
 
     <!-- product img -->
     <img v-if="!props.isHoverContent"
