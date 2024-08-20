@@ -5,12 +5,11 @@
     <n-flex vertical :size="18">
 
       <!-- first row -->
-      <n-flex justify="space-between" class="w-full items-center text-center py-2" :style="{ backgroundColor: themeVars.tableColorHover }">
-        <span class="w-3/12">圖片</span>
-        <span class="w-3/12">產品名稱</span>
+      <n-flex v-if="!isMobile" justify="space-around" class="w-full items-center text-center py-2 px-4" :style="{ backgroundColor: themeVars.tableColorHover }">
+        <span :class="isDesktop ? 'w-6/12' : 'w-5/12'">產品資訊</span>
         <span class="w-1/12">單價</span>
         <span class="w-1/12">數量</span>
-        <span class="w-1/12">總價</span>
+        <span v-if="isDesktop" class="w-1/12">總價</span>
         <span class="w-1/12">操作</span>
       </n-flex>
 
@@ -43,9 +42,14 @@ import ShoppingCartItem from '../components/ShoppingCartItem.vue'
 import { NFlex, useThemeVars } from 'naive-ui'
 import { storeToRefs } from "pinia";
 import { useCartStore } from '../stores/cart';
+import { useWindowSize } from '@vueuse/core';
+import { computed } from 'vue';
 
 // style
 const themeVars = useThemeVars();
+const { width } = useWindowSize();
+const isMobile = computed(() => width.value < 768);
+const isDesktop = computed(() => width.value > 1024);
 
 // pinia
 const cartStore = useCartStore();

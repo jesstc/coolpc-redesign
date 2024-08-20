@@ -1,18 +1,19 @@
 <template>
   <n-flex justify="space-around"
     class="w-full h-fit overflow-hidden items-center"
-    :class="props.isHoverContent ? 'py-1' : 'py-4'"
+    :class="props.isHoverContent ? 'py-1' : 'p-4'"
     :style="!props.isHoverContent && { backgroundColor: themeVars.tableColorHover }">
 
     <!-- product img -->
     <img v-if="!props.isHoverContent"
-      class="w-3/12 h-24 object-scale-down items-center"
+      class="flex-auto h-24 object-scale-down items-center"
+      :class="isDesktop ? 'w-3/12' : 'w-2/12'"
       :src="props.product.imgUrl">
 
     <!-- product name / description -->
-    <n-flex v-if="!props.isHoverContent" vertical :size="8" class="w-3/12">
+    <n-flex v-if="!props.isHoverContent" vertical :size="8" class="flex-auto" :class="isDesktop ? 'w-3/12' : 'w-2/12'">
       <h3>{{ props.product.name }}</h3>
-      <span v-if="props.product.description" :style="{ color: themeVars.clearColorHover }">
+      <span v-if="props.product.description && isDesktop" :style="{ color: themeVars.clearColorHover }">
         {{ props.product.description }}
       </span>
     </n-flex>
@@ -21,27 +22,35 @@
     </n-flex>
 
     <!-- per price -->
-    <p :class="props.isHoverContent && 'flex-auto w-1/6 text-center'">${{ props.product.price }}</p>
+    <p 
+      :class="props.isHoverContent ? 'w-1/6' : 'w-1/12'"
+      class="flex-auto text-center" >
+      ${{ props.product.price }}
+    </p>
 
     <!-- number btn group -->
-    <n-input-number class="h-fit text-center" :class="props.isHoverContent ? 'flex-auto w-1/6' : 'w-1/12'"
+    <n-input-number 
+      class="h-fit text-center flex-auto" 
+      :class="props.isHoverContent ? 'w-1/6' : 'w-1/12'"
       button-placement="both"
       min="1" max="100"
       v-model:value="currentCount"
     />
 
     <!-- total price -->
-    <p v-if="!props.isHoverContent">${{ props.number*props.product.price }}</p>
+    <p v-if="!props.isHoverContent && isDesktop" class="flex-auto w-1/12 text-center">
+      ${{ props.number*props.product.price }}
+    </p>
     
     <!-- delete btn -->
     <n-button 
       strong secondary type="error" 
-      class="h-fit py-1" :class="props.isHoverContent && 'flex-auto w-1/6 py-2'"
+      class="h-fit py-1 flex-auto" :class="props.isHoverContent ? 'w-1/6 py-2' : 'w-1/12 mx-4'"
       @click="removeItem(props.product.id)">
       <template #icon>
         <n-icon :component="TrashOutline" />
       </template>
-      <span v-if="!props.isHoverContent">刪除</span>
+      <span v-if="!props.isHoverContent && isDesktop">刪除</span>
     </n-button>
   </n-flex>
 </template>
@@ -49,9 +58,13 @@
 <script setup lang="ts">
 import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
 import { TrashOutline } from '@vicons/ionicons5'
+import { useWindowSize } from '@vueuse/core';
 import { computed, Ref } from 'vue';
 import { ProductInfo } from '../interfaces/product'
 import { useCartStore } from '../stores/cart';
+
+const { width } = useWindowSize();
+const isDesktop = computed(() => width.value > 1024);
 
 const themeVars = useThemeVars();
 
