@@ -41,6 +41,10 @@ span {
   color: var(--n-color-target);
 }
 
+.btn-bg {
+  background-color: var(--n-color);
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

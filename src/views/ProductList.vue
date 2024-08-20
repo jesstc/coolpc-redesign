@@ -3,7 +3,7 @@
     <n-layout :has-sider="isDesktop ? true : false">
 
       <n-layout-sider v-if="isDesktop">
-        <FilterArea />
+        <FilterArea :isDesktop="isDesktop" />
       </n-layout-sider>
 
       <n-layout :class="isDesktop && 'pl-8'">
@@ -11,7 +11,10 @@
           <n-flex vertical :size="18">
             <n-flex justify="space-between" class="items-center">
               <h1>產品列表</h1>
-              <SortingBtn v-if="isDesktop" />
+              <n-flex>
+                <FilterArea v-if="!isDesktop" :isDesktop="isDesktop" />
+                <SortingBtn :isDesktop="isDesktop" />
+              </n-flex>
             </n-flex>
 
             <!-- category tabs -->
