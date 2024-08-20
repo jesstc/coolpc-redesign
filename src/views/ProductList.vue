@@ -90,6 +90,7 @@ onMounted(() => {
 const handleUpdateCategory = (value: string) => {
   productStore.updateFilters(value);
   productStore.getBrandsByCategory(value);
+  productStore.setCurrentPage(1);
 }
 
 const handlePageChange = (page: number) => {
