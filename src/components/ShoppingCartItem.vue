@@ -56,15 +56,17 @@
 </template>
 
 <script setup lang="ts">
-import { NFlex, NButton, NIcon, NInputNumber, useThemeVars } from 'naive-ui'
-import { TrashOutline } from '@vicons/ionicons5'
+import { NFlex, NButton, NIcon, NInputNumber, useThemeVars, useDialog } from 'naive-ui'
+import { TrashOutline, Warning } from '@vicons/ionicons5'
 import { useWindowSize } from '@vueuse/core';
-import { computed, Ref } from 'vue';
+import { computed, Ref, h } from 'vue';
 import { ProductInfo } from '../interfaces/product'
 import { useCartStore } from '../stores/cart';
 
 const { width } = useWindowSize();
 const isDesktop = computed(() => width.value > 1024);
+
+const dialog = useDialog();
 
 const themeVars = useThemeVars();
 
@@ -87,7 +89,17 @@ const currentCount:Ref<number> = computed({
   },
 });
 const removeItem = (id: number) => {
-  cartStore.removeItem(id);
+  dialog.error({
+    title: '你確定要從購物車刪除此產品？',
+    icon: () => {
+      return h(NIcon, { size: 24 }, { default: () => h(Warning) });
+    },
+    positiveText: '刪除',
+    negativeText: '取消',
+    onPositiveClick: () => {
+      cartStore.removeItem(id);
+    },
+  })
 }
 
 </script>
