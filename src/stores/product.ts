@@ -19,13 +19,18 @@ export const useProductStore = defineStore('product', {
       base: 'category' as 'category' | 'price' | 'brand', 
       isAsc: true as boolean,
     },
+    pagination: {
+      currentPage: 1 as number,
+      totalPage: 1 as number,
+      pageItems: 20 as number,
+    },
     productItems: [] as Array<ProductInfo>,
   }),
 
   getters: {
     // list all product data based on the conditions of filter
     filteredItems: (state) => {
-      return state.productItems.filter((item) => {
+      const allFilteredItems =  state.productItems.filter((item) => {
         const [minPrice, maxPrice] = state.filters.priceRange;
 
         const categoryMatch = (state.filters.category?.length && state.filters.category != "全部") ? state.filters.category.includes(item.category) : true;
@@ -45,6 +50,15 @@ export const useProductStore = defineStore('product', {
           return b.price - a.price;
         }
       });
+
+      // pagination
+      // update total pages
+      state.pagination.totalPage = Math.ceil(allFilteredItems.length / state.pagination.pageItems);
+      // paginate items
+      const start = (state.pagination.currentPage - 1) * state.pagination.pageItems;
+      const end = start + state.pagination.pageItems;
+      
+      return allFilteredItems.slice(start, end);
     },
   },
 
@@ -102,6 +116,11 @@ export const useProductStore = defineStore('product', {
     updateSorter(base: 'category' | 'price' | 'brand', isAsc: boolean) {
       this.sorter.base = base;
       this.sorter.isAsc = isAsc;
+    },
+
+    // pagination - update current page
+    setCurrentPage(page: number) {
+      this.pagination.currentPage = page;
     },
 
     // for comparison
