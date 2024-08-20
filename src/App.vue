@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NMessageProvider, NDialogProvider } from 'naive-ui'
 import { onMounted, ref, Ref } from 'vue'
+import { useRouter } from 'vue-router';
 import Navbar from './components/Navbar.vue'
 import { useProductStore } from './stores/product';
 
@@ -35,7 +36,9 @@ const updateTheme = (newVal: Ref<boolean>) => {
 };
 
 const productStore = useProductStore();
+const router = useRouter();
 onMounted(() => {
+  router.push({ name: 'ProductList' });
   productStore.fetchProductData();
   productStore.getCategories();
 });
