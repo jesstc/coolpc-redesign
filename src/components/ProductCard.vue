@@ -1,5 +1,5 @@
 <template>
-  <n-card class="w-auto h-full">
+  <n-card class="w-auto h-full transition ease-in-out hover:-translate-y-1 hover:scale-103 duration-150">
 
     <template #cover>
       <img class="w-full object-cover" :src="props.product.imgUrl" @click="showModal = true">

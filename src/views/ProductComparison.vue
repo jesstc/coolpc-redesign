@@ -63,7 +63,7 @@
       <div class="flex items-center mr-4 my-4">
         <n-float-button 
           shape="square" position="relative"
-          class="flex flex-col h-24 justify-center p-2 ml-8 md:ml-16"
+          class="flex flex-col h-24 justify-center p-2 ml-8 md:ml-16 transition ease-in-out hover:-translate-y-1 hover:scale-105 duration-150"
           :style="{width: 'auto', height: 'auto', backgroundColor: themeVars.tabColor }"
           @click="showModal = true" >
           <n-icon :component="AddCircleOutline" :size="44"  class="text-3xl mt-2" />
