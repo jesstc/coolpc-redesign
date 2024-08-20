@@ -1,5 +1,5 @@
 <template>
-  <n-card class="w-72">
+  <n-card class="w-72 h-full">
 
     <template #cover>
       <img class="w-full object-cover" :src="props.product.imgUrl" @click="showModal = true">
