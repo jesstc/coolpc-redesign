@@ -6,41 +6,33 @@
     </template>
 
     <template #header>
-      <h3 @click="showModal = true" class="primary-color">
+      <h3 v-if="isDesktop" @click="showModal = true" class="primary-color">
         {{ props.product.category }}｜{{ props.product.name }}
       </h3>
-    </template>
-
-    <template #header-extra>
-      <n-tooltip v-if="props.product.openboxUrl" trigger="hover" placement="bottom">
-        <template #trigger>
-          <n-button strong secondary circle
-            tag="a" target="_blank" type="tertiary"
-            :href="props.product.openboxUrl">
-            <template #icon>
-              <n-icon :component="Box" />
-            </template>
-          </n-button>
-        </template>
-        開箱討論區
-      </n-tooltip>
+      <span v-else @click="showModal = true">
+        {{ props.product.category }}｜{{ props.product.name }}
+        <br />
+      </span>
     </template>
 
     <template #default>
-      <p @click="showModal = true">
+      <p v-if="isDesktop" @click="showModal = true">
         <n-tag :bordered="false">{{ props.product.brand }}</n-tag> &nbsp;
         {{ props.product.description || '' }}
       </p>
     </template>
     
     <template #footer>
-      <p class="font-bold primary-color" @click="showModal = true">
+      <p v-if="isDesktop" class="font-bold primary-color text-right" @click="showModal = true">
         ${{ props.product.price }}
       </p>
+      <span v-else class="primary-color text-right" @click="showModal = true">
+        ${{ props.product.price }}
+      </span>
     </template>
 
     <template #action>
-      <div class="flex flex-col lg:flex-row lg:justify-between gap-2 w-full">
+      <div v-if="isDesktop" class="flex flex-col lg:flex-row lg:justify-between gap-2 w-full">
         <!-- number btn group -->
         <n-input-number class="w-full lg:w-5/12 text-center" 
           button-placement="both"
@@ -124,13 +116,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useComparisonStore } from '../stores/comparison';
 import { ProductInfo } from '../interfaces/product';
-import { NIcon, NCard, NButton, NInputNumber, NTooltip, NTag, NModal, NFlex, useMessage } from 'naive-ui';
+import { NIcon, NCard, NButton, NInputNumber, NTag, NModal, NFlex, useMessage } from 'naive-ui';
 import { Box, Compare } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
+import { useWindowSize } from '@vueuse/core';
 
 const cartStore = useCartStore();
 const comparisonStore = useComparisonStore();
@@ -139,6 +132,9 @@ const message = useMessage();
 
 const currentCount = ref(1);
 const showModal = ref(false);
+
+const { width } = useWindowSize();
+const isDesktop = computed(() => width.value > 1024);
 
 interface Props {
   product: ProductInfo,

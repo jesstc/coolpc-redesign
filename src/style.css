@@ -18,22 +18,22 @@ h1 {
 }
 
 h3 {
-  @apply font-bold text-lg leading-8 tracking-wider h-fit;
+  @apply font-bold text-base md:text-lg leading-8 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 
 h4 {
-  @apply font-bold text-base leading-6 tracking-wider h-fit;
+  @apply font-bold text-sm md:text-base leading-6 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 
 p {
-  @apply text-base leading-7 tracking-wider h-fit;
+  @apply text-base leading-6 md:leading-7 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 
 span {
-  @apply font-medium text-sm leading-4 tracking-wider h-fit;
+  @apply font-medium text-xs md:text-sm leading-3 md:leading-4 tracking-wider h-fit;
   font-family: var(--font-primary);
 }
 

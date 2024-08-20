@@ -1,17 +1,17 @@
 <template>
   <n-spin :show="fetching">
-    <n-layout :has-sider="isMobile ? false : true">
+    <n-layout :has-sider="isDesktop ? true : false">
 
-      <n-layout-sider v-if="!isMobile">
+      <n-layout-sider v-if="isDesktop">
         <FilterArea />
       </n-layout-sider>
 
-      <n-layout :class="!isMobile && 'pl-8'">
+      <n-layout :class="isDesktop && 'pl-8'">
         <n-layout-header>
           <n-flex vertical :size="18">
             <n-flex justify="space-between" class="items-center">
               <h1>產品列表</h1>
-              <SortingBtn v-if="!isMobile" />
+              <SortingBtn v-if="isDesktop" />
             </n-flex>
 
             <!-- category tabs -->
@@ -34,7 +34,7 @@
         <n-layout-content class="py-8">
 
           <!-- product items -->
-          <n-grid v-if="filteredItems.length" cols="1 s:1 m:2 l:3 xl:4" responsive="screen" :x-gap="24" :y-gap="32">
+          <n-grid v-if="filteredItems.length" cols="2 s:3 m:3 l:3 xl:4" responsive="screen" :x-gap="24" :y-gap="32">
             <n-grid-item v-for="(product, key) in filteredItems" :key="key">
               <ProductCard :product="product" />
             </n-grid-item>
@@ -71,7 +71,7 @@ import { computed } from 'vue';
 
 const themeVars = useThemeVars();
 const { width } = useWindowSize();
-const isMobile = computed(() => width.value < 768);
+const isDesktop = computed(() => width.value > 1024);
 
 // get all product data
 const productStore = useProductStore();
