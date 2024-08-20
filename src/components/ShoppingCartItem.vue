@@ -1,5 +1,48 @@
 <template>
-  <n-flex justify="space-around"
+  <!-- (mobile layout) number btn & delet btn -->
+  <n-flex 
+    v-if="isMobile"
+    justify="space-around"
+    class="w-full h-fit overflow-hidden items-center p-4"
+    :style="{ backgroundColor: themeVars.codeColor }"
+  >
+
+    <!-- product img -->
+    <img 
+      class="flex-auto w-4/12 h-24 object-scale-down items-center"
+      :src="props.product.imgUrl">
+
+    <n-flex class="flex-auto w-7/12" vertical>
+      <!-- product name & price -->
+      <n-flex vertical>
+        <p>{{ props.product.name }}</p>
+        <span>${{ props.product.price }}</span>
+      </n-flex>
+
+      <!-- number btn & delet btn -->
+      <n-flex class="w-full">
+        <n-input-number 
+          class="h-fit text-center w-7/12" 
+          button-placement="both"
+          min="1" max="100"
+          v-model:value="currentCount"
+        />
+        <n-button 
+          strong secondary type="error" 
+          class="h-fit py-2 w-4/12"
+          @click="removeItem(props.product.id)">
+          <template #icon>
+            <n-icon :component="TrashOutline" />
+          </template>
+          <span v-if="!props.isHoverContent && isDesktop">刪除</span>
+        </n-button>
+      </n-flex>
+    </n-flex>
+    
+  </n-flex>
+
+  <!-- Normal Layout -->
+  <n-flex v-else justify="space-around"
     class="w-full h-fit overflow-hidden items-center"
     :class="props.isHoverContent ? 'py-1' : 'p-4'"
     :style="!props.isHoverContent && { backgroundColor: themeVars.codeColor }">
@@ -30,6 +73,7 @@
 
     <!-- number btn group -->
     <n-input-number 
+      v-if="!isMobile"
       class="h-fit text-center flex-auto" 
       :class="props.isHoverContent ? 'w-1/6' : 'w-1/12'"
       button-placement="both"
@@ -44,6 +88,7 @@
     
     <!-- delete btn -->
     <n-button 
+      v-if="!isMobile"
       strong secondary type="error" 
       class="h-fit py-1 flex-auto" :class="props.isHoverContent ? 'w-1/6 py-2' : 'w-1/12 mx-4'"
       @click="removeItem(props.product.id)">
@@ -52,6 +97,7 @@
       </template>
       <span v-if="!props.isHoverContent && isDesktop">刪除</span>
     </n-button>
+
   </n-flex>
 </template>
 
@@ -64,6 +110,7 @@ import { ProductInfo } from '../interfaces/product'
 import { useCartStore } from '../stores/cart';
 
 const { width } = useWindowSize();
+const isMobile = computed(() => width.value < 768);
 const isDesktop = computed(() => width.value > 1024);
 
 const dialog = useDialog();

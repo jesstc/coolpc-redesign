@@ -12,10 +12,6 @@
             <router-view />
           </n-layout-content>
 
-          <n-layout-footer bordered class="flex py-4">
-            <span class="text-xs md:font-sm w-full text-center">Copyright © 2024 - Jessica Huang</span>
-          </n-layout-footer>
-          
         </n-layout>
       </n-message-provider>
     </n-dialog-provider>
@@ -23,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NMessageProvider, NDialogProvider } from 'naive-ui'
+import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NConfigProvider, NMessageProvider, NDialogProvider } from 'naive-ui'
 import { onMounted, ref, Ref } from 'vue'
 import { useRouter } from 'vue-router';
 import Navbar from './components/Navbar.vue'
