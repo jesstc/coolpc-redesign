@@ -121,6 +121,10 @@ export const useProductStore = defineStore('product', {
     // pagination - update current page
     setCurrentPage(page: number) {
       this.pagination.currentPage = page;
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     },
 
     // for comparison
