@@ -13,14 +13,14 @@ This project is a responsive web application developed using modern web technolo
 
 This project is built using the following languages and package:
 
-- Vue 3
-- TypeScript
-- Tailwind CSS
-- Faker.js & Mock.js: generate mock data and api
-- Naive UI: UI component package
-- Pinia: status management
-- Vite: fast development tool
-- GitHub: version control 
+- **Vue 3**
+- **TypeScript**
+- **Tailwind CSS**
+- **Faker.js & Mock.js** - generate mock data and api
+- **Naive UI** - UI component package
+- **Pinia** - status management
+- **Vite** - fast development tool
+- **GitHub** - version control 
 
 
 ## Project Structure
@@ -77,5 +77,4 @@ To start the development server, run:
 
 ```
 npm run dev
-
 ```
