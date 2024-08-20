@@ -54,7 +54,7 @@
         <!-- 移除按鈕 -->
         <n-button secondary type="error" @click="removeProduct(product.id)">
           <template #icon><n-icon :component="TrashOutline" /></template>
-          移除
+          移除比較
         </n-button>
 
       </n-flex>
@@ -63,7 +63,7 @@
       <div class="flex items-center mr-4 my-4">
         <n-float-button 
           shape="square" position="relative"
-          class="flex flex-col h-24 justify-center p-2 ml-16"
+          class="flex flex-col h-24 justify-center p-2 ml-8 md:ml-16"
           :style="{width: 'auto', height: 'auto', backgroundColor: themeVars.tabColor }"
           @click="showModal = true" >
           <n-icon :component="AddCircleOutline" :size="44"  class="text-3xl mt-2" />
@@ -74,27 +74,26 @@
         <n-modal
           v-model:show="showModal"
           preset="dialog"
-          :title="`新增比較產品（產品類別：${comparedCategory}）`"
+          title="新增比較產品"
           positive-text="新增"
           negative-text="取消"
           @positive-click="addSelectedProduct"
           @negative-click="showModal = false"
         >
           <template #default>
-            <n-select
-              :options="productNames"
-              placeholder="請選擇想要新增比較的產品"
-              class="w-full mt-6 mb-8"
-              @update:value="changeAddedItem"
-            />
+            <n-flex vertical class="w-full mt-4 mb-6">
+              <p>目前比較的產品類別為：{{ comparedCategory }}</p>
+              <n-select
+                :options="productNames"
+                placeholder="請選擇想要新增比較的產品"
+                @update:value="changeAddedItem"
+              />
+            </n-flex>
           </template>
         </n-modal>
       </div>
 
     </div>
-
-      
-    
 
   </n-flex>
 </template>
