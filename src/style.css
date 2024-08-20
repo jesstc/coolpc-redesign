@@ -37,6 +37,10 @@ span {
   font-family: var(--font-primary);
 }
 
+.primary-color {
+  color: var(--n-color-target);
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

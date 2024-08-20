@@ -6,7 +6,7 @@
     </template>
 
     <template #header>
-      <h3 @click="showModal = true" :style="{color:themeVars.primaryColor}">
+      <h3 @click="showModal = true" class="primary-color">
         {{ props.product.category }}｜{{ props.product.name }}
       </h3>
     </template>
@@ -34,9 +34,7 @@
     </template>
     
     <template #footer>
-      <p class="font-bold"
-        @click="showModal = true" 
-        :style="{color:themeVars.primaryColor}">
+      <p class="font-bold primary-color" @click="showModal = true">
         ${{ props.product.price }}
       </p>
     </template>
@@ -73,7 +71,7 @@
       <n-flex justify="space-between" vertical class="w-full md:w-6/12">
         <n-flex vertical class="h-full">
           <n-flex justify="space-between">
-            <h3 :style="{color:themeVars.primaryColor}">{{ props.product.category }}｜{{ props.product.name }}</h3>
+            <h3 class="primary-color">{{ props.product.category }}｜{{ props.product.name }}</h3>
             <n-flex class="mb-4">
               <n-button strong secondary
                 tag="a" target="_blank" type="tertiary"
@@ -100,7 +98,7 @@
         </n-flex>
 
         <n-flex justify="space-between" class="w-full">
-          <p class="font-bold w-fit" :style="{color:themeVars.primaryColor}">${{ props.product.price }}</p>
+          <p class="font-bold w-fit primary-color">${{ props.product.price }}</p>
 
           <n-flex justify="end">
             <!-- number btn group -->
@@ -130,14 +128,13 @@ import { ref } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useComparisonStore } from '../stores/comparison';
 import { ProductInfo } from '../interfaces/product';
-import { NIcon, NCard, NButton, NInputNumber, NTooltip, NTag, NModal, NFlex, useMessage, useThemeVars } from 'naive-ui';
+import { NIcon, NCard, NButton, NInputNumber, NTooltip, NTag, NModal, NFlex, useMessage } from 'naive-ui';
 import { Box, Compare } from '@vicons/carbon';
 import { Add } from '@vicons/ionicons5'
 
 const cartStore = useCartStore();
 const comparisonStore = useComparisonStore();
 
-const themeVars = useThemeVars();
 const message = useMessage();
 
 const currentCount = ref(1);

@@ -27,7 +27,7 @@
         class="flex-col items-center text-center w-44 md:w-64 flex-shrink-0" >
 
         <!-- 產品名稱 -->
-        <h3 :style="{color: themeVars.primaryColor}">{{ product.name }}</h3>
+        <h3 class="primary-color">{{ product.name }}</h3>
 
         <!-- 產品圖片 -->
         <img :src="product.imgUrl" :alt="product.name" class="w-44 h-44 md:w-64 md:h-64 object-contain" />
