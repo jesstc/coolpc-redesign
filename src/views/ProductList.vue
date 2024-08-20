@@ -98,13 +98,3 @@ const handlePageChange = (page: number) => {
 }
 
 </script>
-
-<style scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-</style>

@@ -9,7 +9,7 @@
 
 body {
   @apply font-normal text-base leading-relaxed tracking-wide h-fit;
-  font-family: var(--font-primary), var(--font-mono);
+  font-family: var(--font-primary);
 }
 
 h1 {
@@ -30,10 +30,17 @@ h4 {
 p {
   @apply text-base leading-7 tracking-wider h-fit;
   font-family: var(--font-primary);
-  /* color: theme('colors.primary.DEFAULT'); */
 }
 
 span {
   @apply font-medium text-sm leading-4 tracking-wider h-fit;
   font-family: var(--font-primary);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
