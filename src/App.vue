@@ -11,14 +11,8 @@
           <router-view />
         </n-layout-content>
 
-        <n-layout-footer bordered class="flex mt-auto px-8 py-6 md:px-24 h-full">
-          <n-space class="flex gap-8 items-center">
-            <img
-              class="cursor-pointer h-14 md:h-16" alt="CoolPC Logo"
-              src="./assets/logo.png"
-            />
-            <span>Copyright 2024 Jessica Huang | 7jesstc1999@gmail.com </span>
-          </n-space>
+        <n-layout-footer bordered class="flex py-4">
+          <span class="text-xs md:font-sm w-full text-center">Copyright © 2024 - Jessica Huang</span>
         </n-layout-footer>
         
       </n-layout>

@@ -2,7 +2,7 @@
   <nav class="flex flex-row py-4 items-center justify-between gap-16 px-8 md:px-24">
 
     <img
-      class="cursor-pointer h-14 md:h-16" alt="CoolPC Logo"
+      class="cursor-pointer h-8 md:h-16" alt="CoolPC Logo"
       src="../assets/logo.png"
       @click="navigateToHome"
     />
