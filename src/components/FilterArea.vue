@@ -137,10 +137,12 @@ onMounted(() => {
 
 const handleUpdateCategories = (value:string):void => {
   productStore.getBrandsByCategory(value);
+  productStore.setCurrentPage(1);
   productStore.updateFilters(value);
 }
 
 const handleUpdateBrands = (value: string):void => {
+  productStore.setCurrentPage(1);
   productStore.updateFilters(undefined, value);
 }
 

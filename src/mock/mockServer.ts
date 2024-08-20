@@ -10,7 +10,7 @@ interface MockOptions {
 
 // get product data
 Mock.mock('/api/products', 'get', {
-  items: generateMockProducts(50),
+  items: generateMockProducts(500),
   code: 200,
 });
 
