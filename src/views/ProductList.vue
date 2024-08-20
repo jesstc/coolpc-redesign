@@ -52,6 +52,11 @@
               @update:page="handlePageChange" />
           </n-flex>
 
+          <!-- move to top btn -->
+          <n-float-button :right="24" :bottom="18" @click="MoveToTop">
+            <n-icon :component="ChevronUp" :size="24" />
+          </n-float-button>
+
         </n-layout-content>
       </n-layout>
 
@@ -63,11 +68,12 @@
 import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
-import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NGrid, NGridItem, NSpin, NTabs, NTab, NFlex, NPagination, useThemeVars } from 'naive-ui'
+import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NGrid, NGridItem, NSpin, NTabs, NTab, NFlex, NPagination, NFloatButton, NIcon, useThemeVars } from 'naive-ui'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
 import { useWindowSize } from '@vueuse/core';
 import { computed } from 'vue';
+import { ChevronUp } from '@vicons/ionicons5'
 
 const themeVars = useThemeVars();
 const { width } = useWindowSize();
@@ -87,4 +93,10 @@ const handlePageChange = (page: number) => {
   productStore.setCurrentPage(page);
 }
 
+const MoveToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 </script>
