@@ -1,17 +1,17 @@
 <template>
   <n-spin :show="fetching">
-    <n-layout has-sider>
+    <n-layout :has-sider="isMobile ? false : true">
 
-      <n-layout-sider>
+      <n-layout-sider v-if="!isMobile">
         <FilterArea />
       </n-layout-sider>
 
-      <n-layout class="pl-8">
+      <n-layout :class="!isMobile && 'pl-8'">
         <n-layout-header>
-          <n-flex vertical>
+          <n-flex vertical :size="18">
             <n-flex justify="space-between" class="items-center">
               <h1>產品列表</h1>
-              <SortingBtn />
+              <SortingBtn v-if="!isMobile" />
             </n-flex>
 
             <!-- category tabs -->
@@ -32,14 +32,6 @@
         </n-layout-header>
 
         <n-layout-content class="py-8">
-          <!-- pagination -->
-          <n-flex v-if="filteredItems.length" justify="end" class="w-full mb-4">
-            <n-pagination 
-              v-model:page="pagination.currentPage" 
-              :page-count="pagination.totalPage"
-              :page-size="pagination.pageItems"
-              @update:page="handlePageChange" />
-          </n-flex>
 
           <!-- product items -->
           <n-grid v-if="filteredItems.length" cols="1 s:1 m:2 l:3 xl:4" responsive="screen" :x-gap="24" :y-gap="32">
@@ -74,8 +66,12 @@ import SortingBtn from '../components/SortingBtn.vue'
 import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NGrid, NGridItem, NSpin, NTabs, NTab, NFlex, NPagination, useThemeVars } from 'naive-ui'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
+import { useWindowSize } from '@vueuse/core';
+import { computed } from 'vue';
 
 const themeVars = useThemeVars();
+const { width } = useWindowSize();
+const isMobile = computed(() => width.value < 768);
 
 // get all product data
 const productStore = useProductStore();
