@@ -2,7 +2,11 @@
 
 ## Overview
 
-This project is a responsive web application developed using modern web technologies. The application offers the following key functionalities:
+The goal of this project is to redesign and improve the user experience and interface of the CoolPC website (原價屋，URL: https://www.coolpc.com.tw/evaluate.php). After conducting a heuristic evaluation, we analyzed the UI and UX of the CoolPC website, identified design issues that hinder user experience, and proposed solutions to address these issues. The improved interface is then developed based on these solutions.
+
+- UI/UX Evaluation and Analysis Document: [Link to Google Slides](https://docs.google.com/presentation/d/1YjUOc8n5QO7VjJPnZezKhiNfEG9MV3g11_eZlakmZ5I/edit?usp=sharing)
+
+This is a responsive web application offering the following key functionalities:
 
 1. Product Listing (產品列表): Display a list of products with detailed information.
 2. Product Comparison (產品比較): Allows users to compare multiple products side by side.
@@ -11,7 +15,7 @@ This project is a responsive web application developed using modern web technolo
 
 ## Technologies Used
 
-This project is built using the following languages and package:
+This project is built using the following languages and packages:
 
 - **Vue 3**
 - **TypeScript**
