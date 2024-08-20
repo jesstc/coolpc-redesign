@@ -72,7 +72,6 @@ import ProductCard from '../components/ProductCard.vue'
 import FilterArea from '../components/FilterArea.vue'
 import SortingBtn from '../components/SortingBtn.vue'
 import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NGrid, NGridItem, NSpin, NTabs, NTab, NFlex, NPagination, useThemeVars } from 'naive-ui'
-import { onMounted } from 'vue'
 import { storeToRefs } from "pinia";
 import { useProductStore } from '../stores/product';
 
@@ -81,11 +80,6 @@ const themeVars = useThemeVars();
 // get all product data
 const productStore = useProductStore();
 const { filteredItems, fetching, filterOptions, filters, pagination } = storeToRefs(productStore);
-
-onMounted(() => {
-  productStore.fetchProductData();
-  productStore.getCategories();
-});
 
 const handleUpdateCategory = (value: string) => {
   productStore.updateFilters(value);

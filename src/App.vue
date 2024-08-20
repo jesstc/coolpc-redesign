@@ -22,12 +22,19 @@
 
 <script setup lang="ts">
 import { darkTheme, lightTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NConfigProvider, NMessageProvider, NSpace } from 'naive-ui'
-import { ref, Ref } from 'vue'
+import { onMounted, ref, Ref } from 'vue'
 import Navbar from './components/Navbar.vue'
+import { useProductStore } from './stores/product';
 
 let isDarkTheme:Ref<boolean> = ref<boolean>(false);
 
 const updateTheme = (newVal: Ref<boolean>) => {
   isDarkTheme.value = newVal.value;
 };
+
+const productStore = useProductStore();
+onMounted(() => {
+  productStore.fetchProductData();
+  productStore.getCategories();
+});
 </script>
