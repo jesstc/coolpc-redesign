@@ -27,13 +27,18 @@
     </template>
 
     <template #default>
-      <n-tag :bordered="false">{{ props.product.brand }}</n-tag>
-      <br>
-      <p @click="showModal = true">{{ props.product.description || '' }}</p>
+      <p @click="showModal = true">
+        <n-tag :bordered="false">{{ props.product.brand }}</n-tag> &nbsp;
+        {{ props.product.description || '' }}
+      </p>
     </template>
     
     <template #footer>
-      <span @click="showModal = true">${{ props.product.price }}</span>
+      <p class="font-bold"
+        @click="showModal = true" 
+        :style="{color:themeVars.primaryColor}">
+        ${{ props.product.price }}
+      </p>
     </template>
 
     <template #action>
@@ -60,12 +65,12 @@
   <!-- modal -->
   <n-modal 
     v-model:show="showModal" preset="card" 
-    style="width: 70vw;">
+    style="width: 80vw;">
     
-    <n-flex justify="space-around" class="flex-row">
-      <img class="object-cover w-4/12" :src="props.product.imgUrl">
+    <n-flex justify="space-around" class="flex-col md:flex-row w-full">
+      <img class="object-scale-down w-full md:w-5/12" :src="props.product.imgUrl">
 
-      <n-flex justify="space-between" vertical class="w-7/12">
+      <n-flex justify="space-between" vertical class="w-full md:w-6/12">
         <n-flex vertical class="h-full">
           <n-flex justify="space-between">
             <h3 :style="{color:themeVars.primaryColor}">{{ props.product.category }}｜{{ props.product.name }}</h3>
@@ -95,7 +100,7 @@
         </n-flex>
 
         <n-flex justify="space-between" class="w-full">
-          <p class="font-bold" :style="{color:themeVars.primaryColor}">${{ props.product.price }}</p>
+          <p class="font-bold w-fit" :style="{color:themeVars.primaryColor}">${{ props.product.price }}</p>
 
           <n-flex justify="end">
             <!-- number btn group -->
